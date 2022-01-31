@@ -212,13 +212,13 @@ int main(int argc, char **argv) {
   VString bkgs_HWW, bkgs_HTT, signals_HTT, signals_HWW;
   VString bkgs_HWW_nomass, bkgs_HTT_nomass, signals_HTT_nomass, signals_HWW_nomass;
 
-  bkgs_HWW = {"ggHWW125","qqHWW125","WHWW125","ZHWW125"};
-  bkgs_HTT = {"ggH125","qqH125","WH125","ZH125"};
+  bkgs_HWW = {"ggHWW125","qqHWW125"};
+  bkgs_HTT = {"ggH125","qqH125"};
   signals_HTT = {"bbH125","ggHbb125"};
   signals_HWW = {"bbHWW125","ggHbbWW125"};
 
-  bkgs_HWW_nomass = {"ggHWW","qqHWW","WHWW","ZHWW"};
-  bkgs_HTT_nomass = {"ggH","qqH","WH","ZH"};
+  bkgs_HWW_nomass = {"ggHWW","qqHWW"};
+  bkgs_HTT_nomass = {"ggH","qqH"};
   signals_HTT_nomass = {"bbH","ggHbb"};
   signals_HWW_nomass = {"bbHWW","ggHbbWW"};
 
@@ -402,10 +402,10 @@ int main(int argc, char **argv) {
     };
 
     cats["tt"] = {
-      { 1, "tt_xxh"}, 
-
-      { 7, "tt_emb"},
-      { 8, "tt_ff"}
+      { 1, "tt_cat0_NbtagGt1"}, 
+      { 2, "tt_cat1_NbtagGt1"},
+      { 3, "tt_cat2_NbtagGt1"},
+      { 4, "tt_cat3_NbtagGt1"},
     };
 
     cats["em"] = {
@@ -426,9 +426,10 @@ int main(int argc, char **argv) {
   // Introduce ordering of categories for the final discriminator in MSSM
   std::vector<int> mva_categories = {4,5,6,7,8}; // Control regions for MVA HTT analysis
   std::vector<int> em_ttbar_categories = {15,25,35}; // tt control regions for em channel
-  std::vector<int> no_btag_categories = {12,13,14,15}; // 0 btag 
-  std::vector<int> btag_categories = {22,23,24,25}; // 1 btag
-  std::vector<int> doublebtag_categories = {32,33,34,35}; // 1 btag
+  std::vector<int> no_btag_categories = {12,13,14,15}; // 0-btag 
+  std::vector<int> btag_categories = {22,23,24,25}; // 1-btag or >=1 
+  std::vector<int> doublebtag_categories = {32,33,34,35}; // 2-btag
+  std::vector<int> all_btag_categories = {22,23,24,25,32,33,34,35};  
 
   std::vector<int> main_mva_signal_category = {1}; // category for the bbH SM signal
   std::vector<int> mva_signal_category = {2,3}; // category for the bbHWW and main SM signals
@@ -520,58 +521,57 @@ int main(int argc, char **argv) {
     binning_map["tt"] = {};
 
     std::map<unsigned int, std::vector<double> >  binning_map_btag0;
-    std::map<unsigned int, std::vector<double> >  binning_map_btag1;
-    std::map<unsigned int, std::vector<double> >  binning_map_btag2;
+    std::map<unsigned int, std::vector<double> >  binning_map_btagGe1;
 
+    // re-binning (needs to be adjusted later...)
+    // start binning from 40 GeV for m_sv 
+    // (poor description of data below 40 GeV)
     binning_map_btag0[0]   = { 40., 160., 10.};
     binning_map_btag0[1]   = {160., 200., 20.};
     binning_map_btag0[2]   = {200., 300., 25.};
 
-    binning_map_btag1[0] = { 40., 180., 20.};
-    binning_map_btag1[1] = {180., 300., 40.};
-
-    binning_map_btag2[0] = { 40., 180., 20.};
-    binning_map_btag2[1] = {180., 300., 40.};
+    binning_map_btagGe1[0] = { 40., 180., 20.};
+    binning_map_btagGe1[1] = {180., 300., 40.};
 
     if ( categorization != "mva" ) {
 
       binning_map["mt"][12] = binning_map_btag0;
       binning_map["mt"][13] = binning_map_btag0;
-      binning_map["mt"][22] = binning_map_btag1;
-      binning_map["mt"][23] = binning_map_btag1;
+      binning_map["mt"][22] = binning_map_btagGe1;
+      binning_map["mt"][23] = binning_map_btagGe1;
 
       binning_map["et"][12] = binning_map_btag0;
       binning_map["et"][13] = binning_map_btag0;
-      binning_map["et"][22] = binning_map_btag1;
-      binning_map["et"][23] = binning_map_btag1;
+      binning_map["et"][22] = binning_map_btagGe1;
+      binning_map["et"][23] = binning_map_btagGe1;
 
       binning_map["em"][12] = binning_map_btag0;
       binning_map["em"][13] = binning_map_btag0;
       binning_map["em"][14] = binning_map_btag0;
       binning_map["em"][15] = binning_map_btag0;
 
-      binning_map["em"][22] = binning_map_btag1;
-      binning_map["em"][23] = binning_map_btag1;
-      binning_map["em"][24] = binning_map_btag1;
-      binning_map["em"][25] = binning_map_btag1;      
+      binning_map["em"][22] = binning_map_btagGe1;
+      binning_map["em"][23] = binning_map_btagGe1;
+      binning_map["em"][24] = binning_map_btagGe1;
+      binning_map["em"][25] = binning_map_btagGe1;      
 
       binning_map["tt"][11] = binning_map_btag0;
-      binning_map["tt"][21] = binning_map_btag1;
+      binning_map["tt"][21] = binning_map_btagGe1;
 
       if (categorization == "btag-fine") {
 
-	binning_map["mt"][32] = binning_map_btag2;
-	binning_map["mt"][33] = binning_map_btag2;
+	binning_map["mt"][32] = binning_map_btagGe1;
+	binning_map["mt"][33] = binning_map_btagGe1;
 
-	binning_map["et"][32] = binning_map_btag2;
-	binning_map["et"][33] = binning_map_btag2;
+	binning_map["et"][32] = binning_map_btagGe1;
+	binning_map["et"][33] = binning_map_btagGe1;
 
-	binning_map["em"][32] = binning_map_btag2;
-	binning_map["em"][33] = binning_map_btag2;
-	binning_map["em"][34] = binning_map_btag2;
-	binning_map["em"][35] = binning_map_btag2;
+	binning_map["em"][32] = binning_map_btagGe1;
+	binning_map["em"][33] = binning_map_btagGe1;
+	binning_map["em"][34] = binning_map_btagGe1;
+	binning_map["em"][35] = binning_map_btagGe1;
 	  
-	binning_map["tt"][32] = binning_map_btag2;
+	binning_map["tt"][32] = binning_map_btagGe1;
 
       }
     }
@@ -629,6 +629,7 @@ int main(int argc, char **argv) {
   });
 
   // turn all JES+JER+met-unclustered uncertainties into lnN for nbtag categories - should check the met recoil uncertainties as well for small processes
+  /*
   std::vector<std::string> jetmet_systs = {
     "CMS_scale_j_Absolute",
     "CMS_scale_j_BBEC1",
@@ -685,9 +686,8 @@ int main(int argc, char **argv) {
   };
 
   for(auto u : met_uncerts) ConvertShapesToLnN (cb.cp().bin_id(btag_cat_bins).process({"ZTT"}, false), u);
-
-  // At this point we can fix the negative bins for the remaining processes
-  // We don't want to do this for the ggH i component since this can have negative bins
+  */
+  // fix the negative bins for the remaining processes
   std::cout << "[INFO] Fixing negative bins.\n";
   cb.cp().ForEachProc([](ch::Process *p) {
       if (ch::HasNegativeBins(p->shape())) {

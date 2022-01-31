@@ -71,10 +71,14 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
 	{"ZTT", "TT", "TTT", "TTL", "TTJ", "W", "ZJ", "ZL", "VV", "VVT", "VVL", "VVJ", "ST"}
               });
 
-  std::vector<int> mva_categories = {1, 2, 3, 4, 5, 6, 7, 8, 9 }; // mva categories
+  std::vector<int> mva_categories = {1, 2, 3, 4, 5, 6, 7, 8, 9}; // mva categories
   std::vector<int> nobtag_categories = {12,13,14,15}; // no-btag categories
   std::vector<int> btag_categories = {22,23,24,25}; // single-btag categories
   std::vector<int> double_btag_categories = {32,33,34,35}; // double-btag categories
+  std::vector<int> all_btag_categories = {22,23,24,25,32,33,34,35}; // single or double btag
+  // unreliable estimate of the QCD background in high dzeta btag categories (em channel)
+  // TODO : FIX problem analysis-wise 
+  std::vector<int> btag_categories_no_high_dzeta = {23,24,25,33,34,35};
 
   // ##########################################################################
   // Uncertainty: b tagging acceptance uncertainties for pdf and scale and hdamp variations.
@@ -402,6 +406,7 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
   // ##########################################################################
   
   // uncertainties as shape systematic (can be optionally converted to lnN
+  /*
   cb.cp()
     .channel({"et", "mt", "tt", "em"})
     .process(mc_processes)
@@ -411,7 +416,7 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
     .channel({"et", "mt", "tt", "em"})
     .process(mc_processes)
     .AddSyst(cb, "CMS_htt_mistag_b_$ERA", "shape", SystMap<>::init(1.00));  
-  
+  */
   // ##########################################################################
   // Uncertainty: Electron energy scale
   // References:
@@ -450,6 +455,7 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
   std::vector<std::string> tau_es_processes = JoinStr({{"ZTT", "TTT", "TTL", "VVT", "VVL"}, signals, signals_bbH, signals_ggHbb});
   std::vector<std::string> tau_es_processes_emb = {"EMB"};
   
+  /*
   cb.cp()
     .channel({"et", "mt", "tt"})
     .process(tau_es_processes)
@@ -511,7 +517,7 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
     .channel({"et", "mt", "tt"})
     .process({"EMB"})
     .AddSyst(cb, "CMS_scale_t_3prong1pizero_$ERA", "shape", SystMap<>::init(0.5));
-
+  */
   // ##########################################################################
   // Uncertainty: Jet energy scale
   // References:
@@ -520,6 +526,7 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
   // Notes:
   // ##########################################################################
 
+  /*
   // Regional JES
   // uncorrelated between eras
   cb.cp()
@@ -582,7 +589,8 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
     .channel({"et", "mt", "tt", "em"})
     .process(mc_processes)
     .AddSyst(cb, "CMS_res_j_$ERA", "shape", SystMap<>::init(1.00));
-  
+  */  
+
   // ##########################################################################
   // Uncertainty: MET energy scale and Recoil
   // References:
@@ -590,6 +598,7 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
   // - FIXME: Clustered vs unclustered MET? Inclusion of JES splitting?
   // - FIXME: References?
   // ##########################################################################
+  /*
   cb.cp()
     .channel({"et", "mt", "tt", "em"})
     .process({"TT", "TTT", "TTL", "TTJ", "VV", "VVT", "VVL", "VVJ", "ST"})
@@ -731,7 +740,7 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
   cb.cp()
     .channel({"em"})
     .process({"QCD"})
-    .AddSyst(cb, "CMS_htt_qcd_nonClosure", "shape", SystMap<>::init(1.00));
+    .AddSyst(cb, "CMS_htt_qcd_nonClosure", "shape", SystMap<bin_id>::init(btag_categories_no_high_dzeta,1.00));
   cb.cp()
     .channel({"em"})
     .process({"QCD"})
@@ -743,16 +752,17 @@ void AddbbHRun2Systematics(CombineHarvester &cb, bool embedding, bool ttbar_rate
     .channel({"em"})
     .process({"QCD"})
     .AddSyst(cb, "CMS_htt_qcd_nbtag_closure_stat_$ERA", "lnN", SystMap<bin_id>::init
-	     ({2,35,36,37,38,39,40}, 1.07));
+	     (all_btag_categories, 1.07));
   cb.cp()
     .channel({"em"})
     .process({"QCD"})
     .AddSyst(cb, "CMS_htt_qcd_nbtag_closure_syst", "lnN", SystMap<bin_id>::init
-	     ({2,35,36,37,38,39,40}, 1.05));
+	     (all_btag_categories, 1.05));
   cb.cp()
     .channel({"em"})
+    .bin_id({22},false)
     .process({"QCD"})
-    .AddSyst(cb, "subtrMC", "shape", SystMap<>::init(1.00));
+    .AddSyst(cb, "subtrMC", "shape", SystMap<bin_id>::init(btag_categories_no_high_dzeta,1.00));
 
   cb.cp()
     .channel({"em"})
