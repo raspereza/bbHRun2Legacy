@@ -113,8 +113,8 @@ for chn in chns:
 
 ch.SetStandardBinNames(cb)
 
-writer=ch.CardWriter("output/" + args.output_folder + year + "/$TAG/$BIN"+year+".txt",
-                      "output/" + args.output_folder + year +"/$TAG/bbhtt_input_$BIN"+year+".root")
+writer=ch.CardWriter("output/" + args.output_folder + "/$TAG/$BIN"+year+".txt",
+                      "output/" + args.output_folder +"/$TAG/bbhtt_input_$BIN"+year+".root")
 writer.SetWildcardMasses([])
 writer.SetVerbosity(0);
                 
@@ -124,6 +124,20 @@ writer.WriteCards("cmb",cb);
 #Per channel:
 for chn in chns:
   writer.WriteCards(chn,cb.cp().channel([chn]))
+
+#Also have per-year cards available
+peryearwriter=ch.CardWriter("output/" + args.output_folder + "/$TAG"+year+"/$BIN"+year+".txt",
+                      "output/" + args.output_folder +"/$TAG"+year+"/bbhtt_input_$BIN"+year+".root")
+peryearwriter.SetWildcardMasses([])
+peryearwriter.SetVerbosity(0);
+                
+#Combined-per year:
+peryearwriter.WriteCards("cmb",cb);
+
+#Per channel-per year:
+for chn in chns:
+  peryearwriter.WriteCards(chn,cb.cp().channel([chn]))
+
 
 
 
