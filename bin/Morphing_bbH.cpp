@@ -99,6 +99,7 @@ int main(int argc, char **argv) {
   bool no_emb(false);
   bool no_shape_systs = false;
   bool ttbar_rate = false;
+  bool test_mode = false;
 
   string analysis = "inclusive_bbH"; 
   std::vector<string> analysis_choices = {"sm", "bbH", "inclusive_bbH"};
@@ -130,6 +131,7 @@ int main(int argc, char **argv) {
       ("bkgs", po::value<vector<string>>(&parser_bkgs)->multitoken(), "backgrounds")
       ("bkgs_em", po::value<vector<string>>(&parser_bkgs_em)->multitoken(), "backgrounds-em")
       ("no_shape_systs", po::value<bool>(&no_shape_systs)->default_value(no_shape_systs))
+      ("test_mode", po::value<bool>(&test_mode)->default_value(test_mode),"override deprecation warning when running")
       ("help", "produce help message");
   po::store(po::command_line_parser(argc, argv).options(config).run(), vm);
   po::notify(vm);
@@ -139,6 +141,10 @@ int main(int argc, char **argv) {
       return 0;
     }
   
+  if(!test_mode){
+    std::cout<<" DEPRECATED - USE THE PYTHON SETUP INSTEAD "<<std::endl;
+    exit(1);
+  }
   // Sanity check for options with choices
   // analysis option
   if(std::find(analysis_choices.begin(), analysis_choices.end(), analysis) == analysis_choices.end()){
