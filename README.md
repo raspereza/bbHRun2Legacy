@@ -14,12 +14,14 @@ cd ../..
 git clone https://github.com/cms-analysis/CombineHarvester.git CombineHarvester
 cd CombineHarvester
 git clone https://github.com/raspereza/bbHRun2Legacy.git bbHRun2Legacy
-cd ..
+cd bbHRun2Legacy
+git clone https://gitlab.cern.ch/adewit/bbhshapes.git shapes
+cd ../..
 scram b
 ```
 
 The input shapes should be put in a directory `bbHRun2Legacy/shapes` and should be named `htt_CHANNEL_bbH.RunYEAR.root`, e.g. `htt_mt_bbH.Run2018.root`.
-The scripts currently look for the individual process shapes in the main directory (tt, em) or in the `BDToutput` subdirectory (et, mt).
+The scripts currently look for the individual process shapes in the main directory (tt, em) or in the `BDToutput` subdirectory (et, mt). Make sure the latest shapes for each channel are always in the `bbhshapes` repository so that everyone has access to them.
 
 *TODO*: we should make sure the latest input shapes are always available to everyone, either by mirroring them from a common afs/eos directory or by sharing them in a separate repository.
 
