@@ -50,10 +50,10 @@ if year is not "2016" and not "2017" and not "2018":
   sys.exit()
 
 bkg_procs = {
-    'mt' : ['QCD','TT','ST','WJets','DYJets','VV','ZH','VBF','JJH'],
-    'et' : ['QCD','TT','ST','WJets','DYJets','VV','ZH','VBF','JJH'],
+    'mt' : ['QCD','TT','ST','WJets','DYJets','VV','ZH','VBF','jjH','jjH_inc','ggjjH'],
+    'et' : ['QCD','TT','ST','WJets','DYJets','VV','ZH','VBF','jjH','jjH_inc','ggjjH'],
     'tt' : ['EMB','ZL','TTL','VVL','jetFakes', 'wFakes','ggH125','qqH125'],
-    'em' : ['EMB','ZL','TTL','VVL','jetFakes', 'wFakes','ggH125','qqH125','ggHWW125','qqHWW125'] #FIXME
+    'em' : ['EMB','ZL','TTL','VVL','QCD', 'W','ggH125','qqH125','ggHWW125','qqHWW125','WH125','WHWW125','ZH125','ZHWW125'] #FIXME
 }
 
 sig_procs = {
@@ -78,11 +78,18 @@ categories = {
     (4, "tt_cat3_NbtagGt1")
   ],
   'em' : [
-     ( 1, "em_xxh"), 
-     ( 4, "em_ttbar"),
-     ( 6, "em_misc"),
-     ( 7, "em_emb"),
-     ( 8, "em_ss")
+     ( 1, "em_Nbtag0_DZetaGt30"), 
+     ( 2, "em_Nbtag0_DZetaLtm35"), 
+     ( 3, "em_Nbtag0_DZetam10To30"), 
+     ( 4, "em_Nbtag0_DZetam35Tom10"), 
+     ( 5, "em_Nbtag1_DZetaGt30"), 
+     ( 6, "em_Nbtag1_DZetaLtm35"), 
+     ( 7, "em_Nbtag1_DZetam10To30"), 
+     ( 8, "em_Nbtag1_DZetam35Tom10"), 
+     ( 9, "em_Nbtag2_DZetaGt30"), 
+     ( 10, "em_Nbtag2_DZetaLtm35"), 
+     ( 11, "em_Nbtag2_DZetam10To30"), 
+     ( 12, "em_Nbtag2_DZetam35Tom10"), 
   ]
 }
 
