@@ -150,6 +150,17 @@ def AddSystematics2018(cb):
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_1718','lnN', ch.SystMap()(1.002))
 
   cb.cp().process(['ZTT','ZL','ZJ']).channel(["tt","em"]).AddSyst(cb, 'CMS_htt_dyShape', 'shape', ch.SystMap()(0.10)) #FIXME not present in mt,et
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr2', 'shape', ch.SystMap()(1.0))
+  #cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'jesTotal', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'ff', 'shape', ch.SystMap()(1.0))
 
 def AddSystematics2017(cb):
   backgrounds  = cb.cp().backgrounds().process_set()
@@ -164,7 +175,17 @@ def AddSystematics2017(cb):
   cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'CMS_prefiring', 'shape', ch.SystMap()(1.0))
 
   cb.cp().process(['ZTT','ZL','ZJ']).channel(["tt","em"]).AddSyst(cb, 'CMS_htt_dyShape', 'shape', ch.SystMap()(0.10)) #FIXME not present in mt,et
-  
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr2', 'shape', ch.SystMap()(1.0))
+  #cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'jesTotal', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'ff', 'shape', ch.SystMap()(1.0))
 
 
 def AddSystematics2016(cb):
@@ -178,4 +199,14 @@ def AddSystematics2016(cb):
 
   cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'CMS_prefiring', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['ZTT','ZL','ZJ']).channel(["tt","em"]).AddSyst(cb, 'CMS_htt_dyShape_2016', 'shape', ch.SystMap()(0.10)) #FIXME not present in mt,et
-
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr2', 'shape', ch.SystMap()(1.0))
+  #cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'jesTotal', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'ff', 'shape', ch.SystMap()(1.0))
