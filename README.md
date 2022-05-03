@@ -44,6 +44,7 @@ It is also possible to just run
 This will create workspaces with the default physics model, which creates one POI (r) which will scale both signal processes (ggH+2b and bbH). The interference term is scaled with -r.
 
 For the kappa model run:
+
 `combineTool.py -M T2W -i output/cards/* -P HiggsAnalysis.CombinedLimit.LHCHCGModels:K1Int -m 125.38 -o ws_kappas.root`
 
 ## Calculate limits
@@ -54,9 +55,11 @@ Note the `--run blind` is important - we don't want to accidentally unblind the 
 
 ## MultiDimFit
 The MultiDimFit for kappa_b and kappa_t is run with:
+
 `combineTool.py -M MultiDimFit -d output/cards/cmb/ws_kappas.root --there --redefineSignalPOIs kappa_b,kappa_t --setParameters kappa_b=1,kappa_t=1 -m 125.38 --algo grid --points 300 -t -1`
 
 The 2D plot for kappa_b and kappa_t can be produced with:
+
 `python scripts/plotMultiDimFit.py output/cards/cmb/higgsCombine.Test.MultiDimFit.mH125.38.root`
 
 Useful for debugging - just run a single fit (turn up the verbosity with -v 3 to get more detailed fit logs from minuit).
