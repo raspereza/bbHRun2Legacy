@@ -50,15 +50,15 @@ if year is not "2016" and not "2017" and not "2018":
   sys.exit()
 
 bkg_procs = {
-    'mt' : ['QCD','TT','ST','WJets','DYJets','VV','ZH','VBF','JJH'],
-    'et' : ['QCD','TT','ST','WJets','DYJets','VV','ZH','VBF','JJH'],
+    'mt' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
+    'et' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'],
     'tt' : ['EMB','ZL','TTL','VVL','jetFakes', 'wFakes','ggH125','qqH125'],
     'em' : ['EMB','ZL','TTL','VVL','jetFakes', 'wFakes','ggH125','qqH125','ggHWW125','qqHWW125'] #FIXME
 }
 
 sig_procs = {
-   'mt' : ['bbH','ggH'],
-   'et' : ['bbH','ggH'],
+   'mt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt'],
+   'et' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt'],
    'tt' : ['bbH125','ggHbb125'],
    'em' : ['bbH125','ggHbb125','bbHWW125','ggHbbWW125']
 }
@@ -66,10 +66,16 @@ sig_procs = {
 
 categories = {
   'mt' : [
-    (1, 'inclusive') #Currently not used in the input file names anywhere, just for bookkeeping
+    (1, 'inclusive'),
+    #(1, 'sig'),
+    #(2, 'tt'),
+    #(3, 'dy')
   ],
   'et' : [
-    (1, 'inclusive') #Currently not used in the input file names anywhere, just for bookkeeping
+    (1, 'inclusive'),
+    #(1, 'sig'),
+    #(2, 'tt'),
+    #(3, 'dy')
   ],
   'tt' : [
     (1, "tt_cat0_NbtagGt1"),
@@ -93,6 +99,7 @@ for chn in chns:
 
 
 systs.AddCommonSystematics(cb,year)
+
 if args.year=='2018':
   systs.AddSystematics2018(cb)
 if args.year=='2017':
@@ -100,18 +107,28 @@ if args.year=='2017':
 if args.year=='2016':
   systs.AddSystematics2016(cb)
 
+
 cb.AddDatacardLineAtEnd("* autoMCStats 0")
 
 for chn in chns:
-  inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
+  #inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
+  inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
   if chn in ["et","mt"]:
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
+    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC') 
+    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC')
   if chn in ["tt", "em"]:
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
 
 ch.SetStandardBinNames(cb)
+
+#remove old datacards
+outdir = "output/" + args.output_folder + "/" + chn + year
+for f in os.listdir(outdir):
+    print "remove:",os.path.join(outdir,f)
+    os.remove(os.path.join(outdir, f))
 
 writer=ch.CardWriter("output/" + args.output_folder + "/$TAG/$BIN"+year+".txt",
                       "output/" + args.output_folder +"/$TAG/bbhtt_input_$BIN"+year+".root")

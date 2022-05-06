@@ -3,19 +3,19 @@ import CombineHarvester.CombineTools.ch as ch
 def AddCommonSystematics(cb, year):
   backgrounds = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  bbhsignals = ['bbH','bbH125','bbHWW125']
-  mc_processes = ['bbH','bbH125','bbHWW125','JJH','ggH','ggH125','ZL','TTL','VVL','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF']
-  nojetfakes = ['bbH','bbH125','bbHWW125','JJH','ggH','ggH125','ZL','TTL','VVL','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','EMB']
-  httprocs = ['bbH','bbH125','JJH','ggH','ggH125','ZH','VBF','qqH125']
+  bbhsignals = ['bbH_htt','bbH125','bbHWW125','bbH_nobb_htt']
+  mc_processes = ['bbH_htt','bbH125','bbHWW125','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ggH125','ZL','TTL','VVL','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF']
+  nojetfakes = ['bbH_htt','bbH125','bbHWW125','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ggH125','ZL','TTL','VVL','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','EMB']
+  httprocs = ['bbH_htt','bbH125','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ggH125','ZH','VBF','qqH125']
   hwwprocs = ['bbHWW125','ggHWW125','qqHWW125']
 
 
   #Signal theory uncertainties
   cb.cp().process(bbhsignals).AddSyst(cb,'QCDscale_bbH','lnN', ch.SystMap()((0.76,1.201)))
-  cb.cp().process(['JJH','ggH125','ggHbbWW125','ggHbb125','ggH']).AddSyst(cb,'QCDscale_ggH','lnN', ch.SystMap()((0.93,1.046)))
-  cb.cp().process(['JJH','ggH125','ggHbbWW125','ggHbb125','ggH']).AddSyst(cb,'pdf_Higgs_ggH','lnN', ch.SystMap()(1.032))
+  cb.cp().process(['ggH125','ggHbbWW125','ggHbb125','ggH_bb_htt','ggH_htt']).AddSyst(cb,'QCDscale_ggH','lnN', ch.SystMap()((0.93,1.046)))
+  cb.cp().process(['ggH125','ggHbbWW125','ggHbb125','ggH_bb_htt','ggH_htt']).AddSyst(cb,'pdf_Higgs_ggH','lnN', ch.SystMap()(1.032))
   #Additional uncertainty for ggH+2b 
-  cb.cp().process(['ggH','ggHbb125','ggHbbWW125']).AddSyst(cb,'QCDscale_ggHbb','lnN',ch.SystMap()(1.40))
+  cb.cp().process(['ggH_bb_htt','ggHbb125','ggHbbWW125']).AddSyst(cb,'QCDscale_ggHbb','lnN',ch.SystMap()(1.40))
 
   #Need to double check these ones 
   cb.cp().process(httprocs).AddSyst(cb,'BR_htt_THU','lnN', ch.SystMap()(1.017))
@@ -45,7 +45,7 @@ def AddCommonSystematics(cb, year):
 
   #Tau ID
   cb.cp().process(nojetfakes).channel(['mt']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.03))
-  cb.cp().process(['bbH','bbH125','bbHWW125','JJH','ggH','ggH125','EMB','ZTT','TTT','VVT']).channel(['tt']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.06))
+  cb.cp().process(['bbH_htt','bbH125','bbHWW125','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ggH125','EMB','ZTT','TTT','VVT']).channel(['tt']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.06))
   cb.cp().process(['TTL','VVL']).channel(['tt']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.03))
 
   #Electron ID
@@ -142,20 +142,29 @@ def AddCommonSystematics(cb, year):
 def AddSystematics2018(cb):
   backgrounds  = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  bbhsignals = ['bbH','bbH125','bbHWW125']
-  mc_processes = ['bbH','bbH125','bbHWW125','JJH','ggH','ggH125','ZL','TTL','VVL','wFakes','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','JJH']
+  mc_processes = ['bbH_htt','bbH125','bbHWW125','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ggH125','ZL','TTL','VVL','wFakes','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF']
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_2018','lnN', ch.SystMap()(1.015))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.02))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_1718','lnN', ch.SystMap()(1.002))
 
   cb.cp().process(['ZTT','ZL','ZJ']).channel(["tt","em"]).AddSyst(cb, 'CMS_htt_dyShape', 'shape', ch.SystMap()(0.10)) #FIXME not present in mt,et
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'jesTotal', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'ff', 'shape', ch.SystMap()(1.0))
 
 def AddSystematics2017(cb):
   backgrounds  = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  bbhsignals = ['bbH','bbH125','bbHWW125']
-  mc_processes = ['bbH','bbH125','bbHWW125','JJH','ggH','ggH125','ZL','TTL','VVL','wFakes','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','JJH']
+  mc_processes = ['bbH_htt','bbH125','bbHWW125','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ggH125','ZL','TTL','VVL','wFakes','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF']
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_2017','lnN', ch.SystMap()(1.020))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.009))
@@ -164,18 +173,37 @@ def AddSystematics2017(cb):
   cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'CMS_prefiring', 'shape', ch.SystMap()(1.0))
 
   cb.cp().process(['ZTT','ZL','ZJ']).channel(["tt","em"]).AddSyst(cb, 'CMS_htt_dyShape', 'shape', ch.SystMap()(0.10)) #FIXME not present in mt,et
-  
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'jesTotal', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'ff', 'shape', ch.SystMap()(1.0))
 
 
 def AddSystematics2016(cb):
   backgrounds  = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  bbhsignals = ['bbH','bbH125','bbHWW125']
-  mc_processes = ['bbH','bbH125','bbHWW125','JJH','ggH','ggH125','ZL','TTL','VVL','wFakes','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','JJH']
+  mc_processes = ['bbH_htt','bbH125','bbHWW125','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ggH125','ZL','TTL','VVL','wFakes','ggH125','qqH125','ggHWW125','qqHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF']
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_2016','lnN', ch.SystMap()(1.010))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.006))
 
   cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'CMS_prefiring', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['ZTT','ZL','ZJ']).channel(["tt","em"]).AddSyst(cb, 'CMS_htt_dyShape_2016', 'shape', ch.SystMap()(0.10)) #FIXME not present in mt,et
-
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag_cferr2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'jesTotal', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'ff', 'shape', ch.SystMap()(1.0))
