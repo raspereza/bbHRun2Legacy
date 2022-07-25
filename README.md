@@ -53,6 +53,21 @@ For the kappa model run:
 
 Note the `--run blind` is important - we don't want to accidentally unblind the analysis.
 
+## Impacts
+
+To run the impacts one needs to run first an initial fit:
+`combineTool.py -M Impacts -d output/cards/mt2018/ws.root -m 125.38 --robustFit 1 -t -1 --expectSignal 1 --doInitialFit`
+
+Next the scan is done for each nuisance parameter:
+`combineTool.py -M Impacts -d output/cards/mt2018/ws.root -m 125.38 --robustFit 1 -t -1 --expectSignal 1 --doFits`
+
+Once the jobs are completed the output can be collected with:
+`combineTool.py -M Impacts -d output/cards/mt2018/ws.root -m 125.38 -o impacts.json`
+
+and plotted with
+
+`plotImpacts.py -i impacts.json -o impacts`
+
 ## MultiDimFit
 The MultiDimFit for kappa_b and kappa_t is run with:
 
