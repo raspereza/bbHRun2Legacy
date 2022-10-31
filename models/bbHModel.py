@@ -6,9 +6,9 @@ class bbHModel(PhysicsModel):
         self.modelBuilder.factory_('expr::negativer("-1*@0", r)')
         self.modelBuilder.out.function("negativer")
         if self.DC.isSignal[process]:
-            if process in ["bbH_htt","ggH_bb_htt"]:
+            if process in ["bbH_htt","ggH_bb_htt","bbH_hww","ggH_bb_hww"]:
                 return "r"
-            elif process=="intH_bb_htt":
+            elif process in ["intH_bb_htt","intH_bb_hww"]:
                 return "negativer"
         return 1
 
