@@ -126,9 +126,10 @@ ch.SetStandardBinNames(cb)
 
 #remove old datacards
 outdir = "output/" + args.output_folder + "/" + chn + year
-for f in os.listdir(outdir):
-    print "remove:",os.path.join(outdir,f)
-    os.remove(os.path.join(outdir, f))
+if os.path.isdir(outdir):
+    for f in os.listdir(outdir):
+        print "remove:",os.path.join(outdir,f)
+        os.remove(os.path.join(outdir, f))
 
 writer=ch.CardWriter("output/" + args.output_folder + "/$TAG/$BIN"+year+".txt",
                       "output/" + args.output_folder +"/$TAG/bbhtt_input_$BIN"+year+".root")
