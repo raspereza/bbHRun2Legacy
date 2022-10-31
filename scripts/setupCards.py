@@ -52,15 +52,15 @@ if year is not "2016" and not "2017" and not "2018":
 bkg_procs = {
     'mt' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
     'et' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'],
-    'tt' : ['EMB','ZL','TTL','VVL','jetFakes', 'wFakes','ggH125','qqH125'],
-    'em' : ['EMB','ZL','TTL','VVL','jetFakes', 'wFakes','ggH125','qqH125','ggHWW125','qqHWW125'] #FIXME
+    'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','ggH125','qqH125','WH125','ZH125'],
+    'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125']
 }
 
 sig_procs = {
    'mt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt'],
    'et' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt'],
-   'tt' : ['bbH125','ggHbb125'],
-   'em' : ['bbH125','ggHbb125','bbHWW125','ggHbbWW125']
+   'tt' : ['bbH125_yb2','bbH125_yt2','bbH125_ybyt'],
+   'em' : ['bbH125_yb2','bbH125_yt2','bbH125_ybyt']
 }
 
 
@@ -78,17 +78,17 @@ categories = {
     #(3, 'dy')
   ],
   'tt' : [
-    (1, "tt_cat0_NbtagGt1"),
-    (2, "tt_cat1_NbtagGt1"),
-    (3, "tt_cat2_NbtagGt1"),
-    (4, "tt_cat3_NbtagGt1")
+    (1, "tt_cat0"),
+    (2, "tt_cat1"),
+    (3, "tt_cat2"),
+    (4, "tt_cat3")
   ],
   'em' : [
-     ( 1, "em_xxh"), 
-     ( 4, "em_ttbar"),
-     ( 6, "em_misc"),
-     ( 7, "em_emb"),
-     ( 8, "em_ss")
+    ( 1, "em_cat0"),
+    ( 2, "em_cat1"),
+    ( 3, "em_cat2"),
+    ( 4, "em_cat3"),
+    ( 5, "em_cat4"),
   ]
 }
 
