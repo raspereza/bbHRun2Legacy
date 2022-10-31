@@ -3,18 +3,18 @@ import CombineHarvester.CombineTools.ch as ch
 def AddCommonSystematics(cb, year):
   backgrounds = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  bbhsignals = ['bbH_htt','bbH_nobb_htt','bbH125_yb2','bbH125_yb2_nobb']
-  mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125','WH','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT']
-  nojetfakes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','EMB','W','ZTT']
-  httprocs = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZH','VBF','ggH125','qqH125','WH125','ZH125']
-  hwwprocs = ['ggHWW125','qqHWW125','WHWW125','ZHWW125']
+  bbhsignals = ['bbH_htt','bbH_nobb_htt','bbH_hww','bbH_nobb_hww']
+  mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','ZL','TTL','VVL','qqH125','WH125','ZH125','qqHWW125','WHWW125','ZHWW125','WH','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT']
+  nojetfakes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','ZL','TTL','VVL','qqH125','WH125','ZH125','qqHWW125','WHWW125','ZHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','EMB','W','ZTT']
+  httprocs = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ZH','VBF','qqH125','WH125','ZH125']
+  hwwprocs = ['bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','qqHWW125','WHWW125','ZHWW125']
 
   #Signal theory uncertainties
   cb.cp().process(bbhsignals).AddSyst(cb,'QCDscale_bbH','lnN', ch.SystMap()((0.76,1.201)))
   cb.cp().process(['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt']).AddSyst(cb,'QCDscale_ggH','lnN', ch.SystMap()((0.93,1.046)))
   cb.cp().process(['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt']).AddSyst(cb,'pdf_Higgs_ggH','lnN', ch.SystMap()(1.032))
   #Additional uncertainty for ggH+2b 
-  cb.cp().process(['ggH_bb_htt','bbH125_yt2']).AddSyst(cb,'QCDscale_ggHbb','lnN',ch.SystMap()(1.40))
+  cb.cp().process(['ggH_bb_htt']).AddSyst(cb,'QCDscale_ggHbb','lnN',ch.SystMap()(1.40))
 
   #Need to double check these ones 
   cb.cp().process(httprocs).AddSyst(cb,'BR_htt_THU','lnN', ch.SystMap()(1.017))
@@ -138,7 +138,7 @@ def AddCommonSystematics(cb, year):
 #  cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_$CHANNEL_qcd_syst_'+year,'shape',ch.SystMap()(1.0))
   cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_$CHANNEL_qcd_syst_dr_closure_'+year,'shape',ch.SystMap()(1.0))
   cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_$CHANNEL_qcd_syst_pt_2_closure_'+year,'shape',ch.SystMap()(1.0))
-  cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_met_closur_'+year,'shape',ch.SystMap()(1.0))
+  cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_met_closure_'+year,'shape',ch.SystMap()(1.0))
   cb.cp().channel(['tt']).process(['wFakes']).AddSyst(cb,'CMS_htt_$CHANNEL_wFakes_syst_'+year,'lnN',ch.SystMap()(1.3))
 
   cb.cp().channel(['tt']).process(['TT','VV','ZL','ST']).AddSyst(cb,'CMS_htt_fake_m_$CHANNEL_'+year,'shape',ch.SystMap()(1.0))
