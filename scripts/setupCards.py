@@ -57,8 +57,8 @@ bkg_procs = {
 }
 
 sig_procs = {
-   'mt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt'],
-   'et' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt'],
+   'mt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],#bbH_nobb_htt removed because of negative contribution
+   'et' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],#bbH_nobb_htt removed because of negative contribution
    'tt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt'],
    'em' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','bbH_nobb_hww','ggH_hww','intH_hww']
 }
@@ -66,16 +66,16 @@ sig_procs = {
 
 categories = {
   'mt' : [
-    (1, 'inclusive'),
-    #(1, 'sig'),
-    #(2, 'tt'),
-    #(3, 'dy')
+    #(1, 'inclusive'),
+    (1, 'BDToutSig'),
+    (2, 'BDToutTT'),
+    (3, 'BDToutDY')
   ],
   'et' : [
-    (1, 'inclusive'),
-    #(1, 'sig'),
-    #(2, 'tt'),
-    #(3, 'dy')
+    #(1, 'inclusive'),
+    (1, 'BDToutSig'),
+    (2, 'BDToutTT'),
+    (3, 'BDToutDY')
   ],
   'tt' : [
     (1, "tt_cat0"),
@@ -117,13 +117,17 @@ if args.year=='2016':
 cb.AddDatacardLineAtEnd("* autoMCStats 0")
 
 for chn in chns:
-  #inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
-  inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
+  inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
+  #inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
   if chn in ["et","mt"]:
-    cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
-    cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
+    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
+    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
+    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC') 
+    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC')
     #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC') 
     #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC')
+    cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
+    cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
   if chn in ["tt", "em"]:
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
