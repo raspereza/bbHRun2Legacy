@@ -50,23 +50,23 @@ if year is not "2016" and not "2017" and not "2018":
   sys.exit()
 
 bkg_procs = {
-    'mt' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
-    'et' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'],
-  #    'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125'],
-  #    'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125']
+  'mt' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
+  'et' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'],
+  'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125'],
+  'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125']
 #   backgrounds for the inclusive bbH+ggHbb model w/o interference term
-    'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125','ggH_htt'],
-    'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125','ggH_htt','ggH_hww']
+#    'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125','ggH_htt'],
+#    'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125','ggH_htt','ggH_hww']
 }
 
 sig_procs = {
    'mt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],#bbH_nobb_htt removed because of negative contribution
    'et' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],#bbH_nobb_htt removed because of negative contribution
-#   'tt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],
-#   'em' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww']
+   'tt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],
+   'em' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww']
 #  simplified verison of the inclusive bbH+ggHbb model w/o interference term
-   'tt' : ['bbH_htt','ggH_bb_htt'],
-   'em' : ['bbH_htt','ggH_bb_htt','bbH_hww','ggH_bb_hww']
+#   'tt' : ['bbH_htt','ggH_bb_htt'],
+#   'em' : ['bbH_htt','ggH_bb_htt','bbH_hww','ggH_bb_hww']
 }
 
 
