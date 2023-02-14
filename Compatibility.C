@@ -1,11 +1,11 @@
 #include "HttStylesNew.cc"
 
-void Compatibility(TString channel = "tt",
+void Compatibility(TString channel = "em",
 		   TString Algo = "saturated",
-		   TString Name = "tt (Run2)",
-		   int bins = 50,
-		   float xmin = 0,
-		   float xmax = 500) {
+		   TString Name = "#tau_{e}#tau_{#mu} (Run2)",
+		   int bins = 40,
+		   float xmin = 200,
+		   float xmax = 400) {
 
   SetStyle();
   gStyle->SetOptStat(0);
