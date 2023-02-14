@@ -52,15 +52,21 @@ if year is not "2016" and not "2017" and not "2018":
 bkg_procs = {
     'mt' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
     'et' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'],
-    'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125'],
-    'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','qqH125','WH125','ZH125','qqHWW125','WHWW125','ZHWW125']
+  #    'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125'],
+  #    'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125']
+#   backgrounds for the inclusive bbH+ggHbb model w/o interference term
+    'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125','ggH_htt'],
+    'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125','ggH_htt','ggH_hww']
 }
 
 sig_procs = {
    'mt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],#bbH_nobb_htt removed because of negative contribution
    'et' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],#bbH_nobb_htt removed because of negative contribution
-   'tt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt'],
-   'em' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','bbH_nobb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','bbH_nobb_hww','ggH_hww','intH_hww']
+#   'tt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],
+#   'em' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww']
+#  simplified verison of the inclusive bbH+ggHbb model w/o interference term
+   'tt' : ['bbH_htt','ggH_bb_htt'],
+   'em' : ['bbH_htt','ggH_bb_htt','bbH_hww','ggH_bb_hww']
 }
 
 
@@ -78,23 +84,21 @@ categories = {
     (3, 'BDToutDY')
   ],
   'tt' : [
-    (1, "tt_cat0"),
-    (2, "tt_cat1"),
-    (3, "tt_cat2"),
-    (4, "tt_cat3")
+    (1, "tt_cat0_NbtagGe1"), # Signal
+    (2, "tt_cat2_NbtagGe1"), # Fakes 
+    (3, "tt_cat3_NbtagGe1"), # Drell-Yan 
+    (4, "tt_cat4_NbtagGe1")  # TTbar 
   ],
   'em' : [
-#    ( 1, "em_cat0"),
-#    ( 2, "em_cat1"),
-#    ( 3, "em_cat2"),
-#    ( 4, "em_cat3"),
-#    ( 5, "em_cat4"),
-    (1, "em_Nbtag0_lowPzeta"),
-    (2, "em_NbtagGe1_lowPzeta"),
-    (3, "em_Nbtag0_Pzeta1"),
-    (4, "em_NbtagGe1_Pzeta1"),
-    (5, "em_Nbtag0_Pzeta2"),
-    (6, "em_NbtagGe1_Pzeta2")
+    ( 1, "em_cat0_NbtagGe1"), # TTbar 
+    ( 2, "em_cat2_NbtagGe1"), # Htautau signal
+    ( 3, "em_cat3_NbtagGe1")  # HWW signal
+#    (1, "em_Nbtag0_lowPzeta"),
+#    (2, "em_NbtagGe1_lowPzeta"),
+#    (3, "em_Nbtag0_Pzeta1"),
+#    (4, "em_NbtagGe1_Pzeta1"),
+#    (5, "em_Nbtag0_Pzeta2"),
+#    (6, "em_NbtagGe1_Pzeta2")
   ]
 }
 
