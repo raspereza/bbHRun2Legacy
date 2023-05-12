@@ -103,8 +103,8 @@ def AddCommonSystematics(cb, year):
       cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_stat_'+jbin+'_'+dm+'_'+year,'shape',ch.SystMap()(1.0))
   
   cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_fakes_subtr_syst_tt_'+year,'shape',ch.SystMap()(1.0))
-  cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_dR_nbtag1_'+year,'shape',ch.SystMap()(1.0))
-  cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_dR_nbtag2_'+year,'shape',ch.SystMap()(1.0))
+#  cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_dR_nbtag1_'+year,'shape',ch.SystMap()(1.0))
+#  cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_dR_nbtag2_'+year,'shape',ch.SystMap()(1.0))
   cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_stat_dR_nbtag1_'+year,'shape',ch.SystMap()(1.0))
   cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_stat_dR_nbtag2_'+year,'shape',ch.SystMap()(1.0))
   cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_met_njet0_closure_'+year,'shape',ch.SystMap()(1.0))
@@ -112,7 +112,7 @@ def AddCommonSystematics(cb, year):
   cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_met_njet2_closure_'+year,'shape',ch.SystMap()(1.0))
   cb.cp().channel(['tt']).process(['jetFakes']).AddSyst(cb,'CMS_htt_tt_qcd_syst_pt_2_closure_'+year,'shape',ch.SystMap()(1.0))
 
-  cb.cp().channel(['tt']).process(['wFakes']).AddSyst(cb,'CMS_htt_tt_wFakes_syst_'+year,'lnN',ch.SystMap()(1.5))
+  cb.cp().channel(['tt']).process(['wFakes']).AddSyst(cb,'CMS_htt_tt_wFakes_syst_'+year,'lnN',ch.SystMap()(1.3))
 
   cb.cp().channel(['tt']).process(['TT','VV','ZL','ST']).AddSyst(cb,'fake_m_$CHANNEL_'+year,'shape',ch.SystMap()(1.0))
 
