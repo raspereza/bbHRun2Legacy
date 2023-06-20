@@ -43,15 +43,14 @@ if 'em' in args.channel:
   chns.append('em')
 
 
-
 year = args.year
 if year is not "2016" and not "2017" and not "2018":
   print "Year ", year, " not supported! Choose from: '2016', '2017', '2018'"
   sys.exit()
 
 bkg_procs = {
-  'mt' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
-  'et' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'],
+  'mt' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
+  'et' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV'],
   'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125'],
   'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125']
 #   backgrounds for the inclusive bbH+ggHbb model w/o interference term
@@ -73,12 +72,14 @@ sig_procs = {
 categories = {
   'mt' : [
     #(1, 'inclusive'),
+    #(1, 'H_mass_sig'),
     (1, 'BDToutSig'),
     (2, 'BDToutTT'),
     (3, 'BDToutDY')
   ],
   'et' : [
     #(1, 'inclusive'),
+    #(1, 'H_mass_sig'),
     (1, 'BDToutSig'),
     (2, 'BDToutTT'),
     (3, 'BDToutDY')
@@ -121,15 +122,9 @@ if args.year=='2016':
 cb.AddDatacardLineAtEnd("* autoMCStats 0")
 
 for chn in chns:
-  inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
-  #inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
+  #inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
+  inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
   if chn in ["et","mt"]:
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC')
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC')
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
   if chn in ["tt", "em"]:
@@ -139,11 +134,12 @@ for chn in chns:
 ch.SetStandardBinNames(cb)
 
 #remove old datacards
-outdir = "output/" + args.output_folder + "/" + chn + year
-if os.path.isdir(outdir):
+for chn in chns:
+  outdir = "output/" + args.output_folder + "/" + chn + year
+  if os.path.isdir(outdir):
     for f in os.listdir(outdir):
-        print "remove:",os.path.join(outdir,f)
-        os.remove(os.path.join(outdir, f))
+      print "remove:",os.path.join(outdir,f)
+      os.remove(os.path.join(outdir, f))
 
 writer=ch.CardWriter("output/" + args.output_folder + "/$TAG/$BIN"+year+".txt",
                       "output/" + args.output_folder +"/$TAG/bbhtt_input_$BIN"+year+".root")
