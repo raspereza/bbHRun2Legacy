@@ -92,8 +92,9 @@ categories = {
   ],
   'em' : [
     ( 1, "em_cat0_NbtagGe1"), # TTbar 
-    ( 2, "em_cat2_NbtagGe1"), # Htautau signal
-    ( 3, "em_cat3_NbtagGe1")  # HWW signal
+    ( 2, "em_cat1_NbtagGe1"), # DY
+    ( 3, "em_cat2_NbtagGe1"), # Htautau signal
+    ( 4, "em_cat3_NbtagGe1")  # HWW signal
 #    (1, "em_Nbtag0_lowPzeta"),
 #    (2, "em_NbtagGe1_lowPzeta"),
 #    (3, "em_Nbtag0_Pzeta1"),
@@ -118,6 +119,7 @@ if args.year=='2017':
 if args.year=='2016':
   systs.AddSystematics2016(cb)
 
+#systs.ConvertToLnN(cb,year)
 
 cb.AddDatacardLineAtEnd("* autoMCStats 0")
 
