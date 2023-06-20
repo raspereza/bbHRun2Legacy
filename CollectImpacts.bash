@@ -3,6 +3,5 @@
 ulimit -s unlimited
 
 cd impacts_${1}
-combineTool.py -M Impacts -d ${CMSSW_BASE}/src/CombineHarvester/bbHRun2Legacy/output/cards/${1}/ws.roo\
-t -m 125.38 -o impacts_${1}.json
+combineTool.py -M Impacts -d ${CMSSW_BASE}/src/CombineHarvester/bbHRun2Legacy/output/cards/${1}/ws.root -m 125.38 -o impacts_${1}.json
 cd -
