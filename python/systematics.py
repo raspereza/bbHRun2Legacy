@@ -7,7 +7,7 @@ def AddCommonSystematics(cb, year):
   mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','ZL','TTL','VVL','qqH125','WH125','ZH125','TTH125','qqHWW125','WH','TTHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTVJets','ttH125','ttH']
   nojetfakes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','ZL','TTL','VVL','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','EMB','W','ZTT','TTVJets','ttH125','ttH']
   httprocs = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ZH','VBF','qqH125','WH125','ZH125','ttH125','TTH125','ttH']
-  hwwprocs = ['bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','qqHWW125','TTHWW125']
+  hwwprocs = ['bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','TTHWW125']
   h125ttprocs = ['ggH_htt','ZH','VBF','qqH125','WH125','ZH125','ttH125','TTH125','ttH']
   h125wwprocs = ['ggH_hww','qqHWW125','TTHWW125']
   hwwprocs_sig = ['bbH_hww','ggH_bb_hww']
@@ -142,8 +142,17 @@ def AddCommonSystematics(cb, year):
   cb.cp().channel(['mt','et','tt','em']).process(['ZTT','ZL','ZJ','DYJets']).AddSyst(cb,'QCDscaleMUFDY','shape',ch.SystMap()(1.0))
 
   # parton shower uncertainties
-  cb.cp().channel(['mt','et','tt','em']).process(mc_processes).AddSyst(cb,'PS_ISR','shape',ch.SystMap()(1.0))
-  cb.cp().channel(['mt','et','tt','em']).process(mc_processes).AddSyst(cb,'PS_FSR','shape',ch.SystMap()(1.0))
+  cb.cp().channel(['mt','et','tt','em']).process(httprocs).AddSyst(cb,'PS_ISRSig','shape',ch.SystMap()(1.0))
+  cb.cp().channel(['mt','et','tt','em']).process(httprocs).AddSyst(cb,'PS_FSRSig','shape',ch.SystMap()(1.0))
+  cb.cp().channel(['em']).process(hwwprocs).AddSyst(cb,'PS_ISRSig','shape',ch.SystMap()(1.0))
+  cb.cp().channel(['em']).process(hwwprocs).AddSyst(cb,'PS_FSRSig','shape',ch.SystMap()(1.0))
+  cb.cp().channel(['mt','et','tt','em']).process(['TT','TTL','TTJ','TTT']).AddSyst(cb,'PS_ISRTT','shape',ch.SystMap()(1.0))
+  cb.cp().channel(['mt','et','tt','em']).process(['TT','TTL','TTJ','TTT']).AddSyst(cb,'PS_FSRTT','shape',ch.SystMap()(1.0))
+  cb.cp().channel(['mt','et','tt','em']).process(['ZTT','ZL','ZJ','DYJets']).AddSyst(cb,'PS_ISRDY','shape',ch.SystMap()(1.0))
+  cb.cp().channel(['mt','et','tt','em']).process(['ZTT','ZL','ZJ','DYJets']).AddSyst(cb,'PS_FSRDY','shape',ch.SystMap()(1.0))
+
+  #cb.cp().channel(['mt','et','tt','em']).process(mc_processes).AddSyst(cb,'PS_ISR','shape',ch.SystMap()(1.0))
+  #cb.cp().channel(['mt','et','tt','em']).process(mc_processes).AddSyst(cb,'PS_FSR','shape',ch.SystMap()(1.0))
 
 def AddSystematics2018(cb):
   backgrounds  = cb.cp().backgrounds().process_set()
