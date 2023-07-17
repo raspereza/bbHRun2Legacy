@@ -49,8 +49,8 @@ if year is not "2016" and not "2017" and not "2018":
   sys.exit()
 
 bkg_procs = {
-  'mt' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
-  'et' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV'],
+  'mt' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV','WJets'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
+  'et' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV','WJets'],
   'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125'],
   'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125']
 #   backgrounds for the inclusive bbH+ggHbb model w/o interference term
@@ -72,14 +72,12 @@ sig_procs = {
 categories = {
   'mt' : [
     #(1, 'inclusive'),
-    #(1, 'H_mass_sig'),
     (1, 'BDToutSig'),
     (2, 'BDToutTT'),
     (3, 'BDToutDY')
   ],
   'et' : [
     #(1, 'inclusive'),
-    #(1, 'H_mass_sig'),
     (1, 'BDToutSig'),
     (2, 'BDToutTT'),
     (3, 'BDToutDY')
@@ -119,13 +117,13 @@ if args.year=='2017':
 if args.year=='2016':
   systs.AddSystematics2016(cb)
 
-#systs.ConvertToLnN(cb,year)
+systs.ConvertToLnN(cb,year)
 
 cb.AddDatacardLineAtEnd("* autoMCStats 0")
 
 for chn in chns:
-  #inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
-  inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
+  inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
+  #inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
   if chn in ["et","mt"]:
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
@@ -167,7 +165,6 @@ peryearwriter.WriteCards("cmb",cb);
 #Per channel-per year:
 for chn in chns:
   peryearwriter.WriteCards(chn,cb.cp().channel([chn]))
-
 
 
 
