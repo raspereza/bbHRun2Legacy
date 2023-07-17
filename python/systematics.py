@@ -7,7 +7,7 @@ def AddCommonSystematics(cb, year):
   mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','ZL','TTL','VVL','qqH125','WH125','ZH125','TTH125','qqHWW125','WH','TTHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTVJets','ttH125','ttH']
   nojetfakes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','ZL','TTL','VVL','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','EMB','W','ZTT','TTVJets','ttH125','ttH']
   httprocs = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ZH','VBF','qqH125','WH125','ZH125','ttH125','TTH125','ttH']
-  hwwprocs = ['bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','TTHWW125']
+  hwwprocs = ['bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','qqHWW125','TTHWW125']
   h125ttprocs = ['ggH_htt','ZH','VBF','qqH125','WH125','ZH125','ttH125','TTH125','ttH']
   h125wwprocs = ['ggH_hww','qqHWW125','TTHWW125']
   hwwprocs_sig = ['bbH_hww','ggH_bb_hww']
