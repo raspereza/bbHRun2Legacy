@@ -50,13 +50,13 @@ if year is not "2016" and not "2017" and not "2018":
   sys.exit()
 
 bkg_procs = {
-  'mt' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
-  'et' : ['QCD','TT','ST','WJets','DYJets','VBF','ZH','ttH','VV'],
+  'mt' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
+  'et' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV'],
   'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125'],
   'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125']
 #   backgrounds for the inclusive bbH+ggHbb model w/o interference term
-#    'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125','ggH_htt'],
-#    'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125','ggH_htt','ggH_hww']
+#  'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125','ggH_htt'],
+#  'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125','ggH_htt','ggH_hww']
 }
 
 sig_procs = {
@@ -65,8 +65,8 @@ sig_procs = {
    'tt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],
    'em' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww']
 #  simplified verison of the inclusive bbH+ggHbb model w/o interference term
-#   'tt' : ['bbH_htt','ggH_bb_htt'],
-#   'em' : ['bbH_htt','ggH_bb_htt','bbH_hww','ggH_bb_hww']
+#  'tt' : ['bbH_htt','ggH_bb_htt'],
+#  'em' : ['bbH_htt','ggH_bb_htt','bbH_hww','ggH_bb_hww']
 }
 
 
@@ -94,12 +94,6 @@ categories = {
     ( 2, "em_cat1_NbtagGe1"), # DY
     ( 3, "em_cat2_NbtagGe1"), # Htautau signal
     ( 4, "em_cat3_NbtagGe1")  # HWW signal
-#    (1, "em_Nbtag0_lowPzeta"),
-#    (2, "em_NbtagGe1_lowPzeta"),
-#    (3, "em_Nbtag0_Pzeta1"),
-#    (4, "em_NbtagGe1_Pzeta1"),
-#    (5, "em_Nbtag0_Pzeta2"),
-#    (6, "em_NbtagGe1_Pzeta2")
   ]
 }
 
@@ -118,7 +112,6 @@ if args.year=='2017':
 if args.year=='2016':
   systs.AddSystematics2016(cb)
 
-#systs.ConvertToLnN(cb,year)
 
 cb.AddDatacardLineAtEnd("* autoMCStats 0")
 
@@ -137,6 +130,8 @@ for chn in chns:
   if chn in ["tt", "em"]:
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
+
+systs.ConvertToLnN(cb,year)
 
 ch.SetStandardBinNames(cb)
 
