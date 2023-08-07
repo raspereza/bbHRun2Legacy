@@ -262,8 +262,8 @@ def AddSystematics2017(cb):
   cb.cp().process(mc_processes).channel(["et"]).AddSyst(cb, 'eff_trig_et_2017', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_m_2017', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_e_2017', 'shape', ch.SystMap()(1.0))
-  #cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  #cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_qcd', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_w', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_tt', 'shape', ch.SystMap()(1.0))
@@ -319,8 +319,8 @@ def AddSystematics2016(cb):
   cb.cp().process(mc_processes).channel(["et"]).AddSyst(cb, 'eff_trig_et_2016', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_m_2016', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_e_2016', 'shape', ch.SystMap()(1.0))
-  #cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  #cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_qcd', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_w', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_tt', 'shape', ch.SystMap()(1.0))
@@ -432,3 +432,6 @@ def renameSys(cb,year):
   cb.cp().RenameSystematic(cb,'QCDscaleMUFTT','QCDscaleMUF_tj')
   cb.cp().RenameSystematic(cb,'PS_ISRTT','PS_ISR_tj')
   cb.cp().RenameSystematic(cb,'PS_FSRTT','PS_FSR_tj')
+
+  # prefiring
+  cb.cp().RenameSystematic(cb,'prefiring','CMS_prefiring')
