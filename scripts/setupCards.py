@@ -133,6 +133,8 @@ for chn in chns:
 
 systs.ConvertToLnN(cb,year)
 
+systs.renameSys(cb,year)
+
 ch.SetStandardBinNames(cb)
 
 #remove old datacards
