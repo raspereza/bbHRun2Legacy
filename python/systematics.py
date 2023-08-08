@@ -15,10 +15,13 @@ def AddCommonSystematics(cb, year):
 
   #Signal theory uncertainties
   cb.cp().process(bbhsignals).AddSyst(cb,'QCDscale_bbH','lnN', ch.SystMap()((0.76,1.201)))
-  cb.cp().process(['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt']).AddSyst(cb,'QCDscale_ggH','lnN', ch.SystMap()((0.93,1.046)))
-  cb.cp().process(['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt']).AddSyst(cb,'pdf_Higgs_ggH','lnN', ch.SystMap()(1.032))
+  cb.cp().process(['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt','ggH_bb_hww','ggH_hww']).AddSyst(cb,'QCDscale_ggH','lnN', ch.SystMap()((0.93,1.046)))
+  cb.cp().process(['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt','ggH_bb_hww','ggH_hww']).AddSyst(cb,'pdf_Higgs_ggH','lnN', ch.SystMap()(1.032))
+
   #Additional uncertainty for ggH+2b 
-  cb.cp().process(['ggH_bb_htt']).AddSyst(cb,'QCDscale_ggHbb','lnN',ch.SystMap()(1.40))
+  # cb.cp().process(['ggH_bb_htt','ggH_bb_hww']).AddSyst(cb,'QCDscale_ggHbb','lnN',ch.SystMap()(1.40))
+  # taken from  arXiv:1808.01660v3 (table 1, yt2 BI-HEFT). Needs further revision.
+  cb.cp().process(['ggH_bb_htt','ggH_bb_hww']).AddSyst(cb,'QCDscale_ggHbb','lnN',ch.SystMap()((0.69,1.47)))
 
   #Need to double check these ones 
   cb.cp().process(httprocs).AddSyst(cb,'BR_htt_THU','lnN', ch.SystMap()(1.017))
@@ -29,10 +32,10 @@ def AddCommonSystematics(cb, year):
   cb.cp().process(hwwprocs).AddSyst(cb,'BR_hww_PU_mq','lnN', ch.SystMap()(1.0099))
   cb.cp().process(hwwprocs).AddSyst(cb,'BR_hww_PU_alphas','lnN', ch.SystMap()(1.0066))
 
-  cb.cp().process(['ZH125','ZH','ZH1','ZHWW125']).AddSyst(cb,'QCDscale_VH','lnN',ch.SystMap()(1.009))
-  cb.cp().process(['ZH125','ZH','ZH1','ZHWW125']).AddSyst(cb,'pdf_Higgs_VH','lnN',ch.SystMap()(1.013))
-  cb.cp().process(['WH125','WH','WH1','WHWW125']).AddSyst(cb,'QCDscale_VH','lnN',ch.SystMap()(1.008))
-  cb.cp().process(['WH125','WH','WH1','WHWW125']).AddSyst(cb,'pdf_Higgs_VH','lnN',ch.SystMap()(1.018))
+  cb.cp().process(['ZH125','ZH','ZH1','ZHWW125']).AddSyst(cb,'QCDscale_ZH','lnN',ch.SystMap()(1.009))
+  cb.cp().process(['ZH125','ZH','ZH1','ZHWW125']).AddSyst(cb,'pdf_Higgs_ZH','lnN',ch.SystMap()(1.013))
+  cb.cp().process(['WH125','WH','WH1','WHWW125']).AddSyst(cb,'QCDscale_WH','lnN',ch.SystMap()(1.008))
+  cb.cp().process(['WH125','WH','WH1','WHWW125']).AddSyst(cb,'pdf_Higgs_WH','lnN',ch.SystMap()(1.018))
   cb.cp().process(['ttH125','ttH','TTH125','TTHWW125']).AddSyst(cb,'QCDscale_ttH','lnN',ch.SystMap()(1.08))
   cb.cp().process(['ttH125','ttH','TTH125','TTHWW125']).AddSyst(cb,'pdf_Higgs_ttH','lnN',ch.SystMap()(1.036))
   cb.cp().process(['VBF','qqH125','qqHWW125']).AddSyst(cb,'QCDscale_qqH','lnN',ch.SystMap()(1.005))
@@ -51,13 +54,13 @@ def AddCommonSystematics(cb, year):
   cb.cp().process(['TTL','VVL']).channel(['tt']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.03))
 
   #Electron ID
-  cb.cp().process(mc_processes).channel(['et','em']).AddSyst(cb,"CMS_eff_e","lnN",ch.SystMap()(1.02))
+  cb.cp().process(mc_processes).channel(['et','em']).AddSyst(cb,"CMS_eff_e_"+year,"lnN",ch.SystMap()(1.02))
 
   #Muon ID
-  cb.cp().process(mc_processes).channel(['mt','em']).AddSyst(cb,"CMS_eff_m","lnN",ch.SystMap()(1.02))
+  cb.cp().process(mc_processes).channel(['mt','em']).AddSyst(cb,"CMS_eff_m_"+year,"lnN",ch.SystMap()(1.02))
 
   #emu Trigger
-  cb.cp().process(mc_processes).channel(['em']).AddSyst(cb,"CMS_eff_em_trig_"+year,"lnN",ch.SystMap()(1.015))
+  cb.cp().process(mc_processes).channel(['em']).AddSyst(cb,"CMS_eff_trigger_em_"+year,"lnN",ch.SystMap()(1.015))
   
   cb.cp().process(mc_processes).channel(['tt']).AddSyst(cb,'CMS_eff_t_$CHANNEL'+'_'+year, 'lnN', ch.SystMap()(1.014))
   cb.cp().process(mc_processes).channel(['et','mt']).AddSyst(cb,'CMS_eff_t_$CHANNEL'+'_'+year,'lnN',ch.SystMap()(1.01))
@@ -161,9 +164,16 @@ def AddSystematics2018(cb):
   bkg_processes = ['TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTH125','ttH125','ttH','TTHWW125','TTVJets']
   sig_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125']
 
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_2018','lnN', ch.SystMap()(1.015))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.02))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_1718','lnN', ch.SystMap()(1.002))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2018','lnN', ch.SystMap()(1.015))
+  #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.02))
+  #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_1718','lnN', ch.SystMap()(1.002))
+  # correlated with the HIG-19-010 datacards
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.002))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.02))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Current_Calibration','lnN', ch.SystMap()(1.002))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Length_Scale','lnN', ch.SystMap()(1.002))
+
+
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2018_jes', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2018_lf', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2018_hf', 'shape', ch.SystMap()(1.0))
@@ -212,9 +222,17 @@ def AddSystematics2017(cb):
   signals = cb.cp().signals().process_set()
   mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTH125','ttH125','ttH','TTHWW125','TTVJets']
 
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_2017','lnN', ch.SystMap()(1.020))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.009))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_1718','lnN', ch.SystMap()(1.006))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2017','lnN', ch.SystMap()(1.020))
+  #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.009))
+  #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_1718','lnN', ch.SystMap()(1.006))
+  #  correlated with the HIG-19-010 datacards
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.004))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.008))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Current_Calibration','lnN', ch.SystMap()(1.003))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Length_Scale','lnN', ch.SystMap()(1.003))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Ghosts_And_Satellites','lnN', ch.SystMap()(1.001))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Dynamic_Beta','lnN', ch.SystMap()(1.005))
+
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2017_jes', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2017_lf', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2017_hf', 'shape', ch.SystMap()(1.0))
@@ -244,8 +262,8 @@ def AddSystematics2017(cb):
   cb.cp().process(mc_processes).channel(["et"]).AddSyst(cb, 'eff_trig_et_2017', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_m_2017', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_e_2017', 'shape', ch.SystMap()(1.0))
-  #cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  #cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_qcd', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_w', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_tt', 'shape', ch.SystMap()(1.0))
@@ -264,8 +282,14 @@ def AddSystematics2016(cb):
   signals = cb.cp().signals().process_set()
   mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTH125','TTHWW125','TTVJets','ttH125','ttH']
 
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_2016','lnN', ch.SystMap()(1.010))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.006))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2016','lnN', ch.SystMap()(1.010))
+  # cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.006))
+  #  correlated with the HIG-19-010 datacards
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.004))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.009))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Ghosts_And_Satellites','lnN', ch.SystMap()(1.004))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Dynamic_Beta','lnN', ch.SystMap()(1.005))
+
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_jes', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_lf', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_hf', 'shape', ch.SystMap()(1.0))
@@ -295,8 +319,8 @@ def AddSystematics2016(cb):
   cb.cp().process(mc_processes).channel(["et"]).AddSyst(cb, 'eff_trig_et_2016', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_m_2016', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_e_2016', 'shape', ch.SystMap()(1.0))
-  #cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  #cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_qcd', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_w', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_tt', 'shape', ch.SystMap()(1.0))
@@ -317,3 +341,97 @@ def ConvertToLnN(cb,year):
 
   cb.cp().process(mc_processes).channel(['tt','em','mt','et']).syst_name(['jer'+year,'met_unclustered'+year]).ForEachSyst(lambda x:x.set_type('lnN'))
   cb.cp().process(jetToLepFakes_processes).channel(['em']).syst_name(jetToLepFakes_sys).ForEachSyst(lambda x:x.set_type('lnN'))
+
+def renameSys(cb,year):
+  cb.cp().RenameSystematic(cb,'met_unclustered'+year,'CMS_scale_met_unclustered_'+year)
+  cb.cp().RenameSystematic(cb,'jer'+year,'CMS_res_j_'+year)
+
+  cb.cp().RenameSystematic(cb,'jesAbsolute','CMS_scale_j_absolute')
+  cb.cp().RenameSystematic(cb,'jesAbsolute_'+year,'CMS_scale_j_absolute_'+year)
+  cb.cp().RenameSystematic(cb,'jesBBEC1','CMS_scale_j_bbec1')
+  cb.cp().RenameSystematic(cb,'jesBBEC1_'+year,'CMS_scale_j_bbec1_'+year)
+  cb.cp().RenameSystematic(cb,'jesEC2','CMS_scale_j_ec2')
+  cb.cp().RenameSystematic(cb,'jesEC2_'+year,'CMS_scale_j_ec2_'+year)
+  cb.cp().RenameSystematic(cb,'jesFlavorQCD','CMS_scale_j_flavorqcd')
+  cb.cp().RenameSystematic(cb,'jesHF','CMS_scale_j_hf')
+  cb.cp().RenameSystematic(cb,'jesHF_'+year,'CMS_scale_j_hf_'+year)
+  cb.cp().RenameSystematic(cb,'jesRelativeBal','CMS_scale_j_relativebal')
+  cb.cp().RenameSystematic(cb,'jesRelativeSample_'+year,'CMS_scale_j_relativesample_'+year)
+
+  cb.cp().RenameSystematic(cb,'scale_t_1prong'+year,'CMS_scale_t_1prong_'+year)
+  cb.cp().RenameSystematic(cb,'scale_t_1prong1pi'+year,'CMS_scale_t_1prong1pizero_'+year)
+  cb.cp().RenameSystematic(cb,'scale_t_3prong'+year,'CMS_scale_t_3prong_'+year)
+
+  cb.cp().RenameSystematic(cb,'eff_trig_mt_'+year,'CMS_eff_trigger_mt_'+year)
+  cb.cp().RenameSystematic(cb,'eff_trig_et_'+year,'CMS_eff_trigger_et_'+year)
+
+  tautriggerdmbins = ["0","1","10","11"]
+  for taubin in tautriggerdmbins:
+    cb.cp().RenameSystematic(cb,'CMS_eff_xtrigger_t_tt_dm'+taubin+'_'+year,'CMS_eff_trigger_tt_dm'+taubin+'_'+year)
+
+  cb.cp().RenameSystematic(cb,'btag'+year+'_jes','CMS_eff_b_jes_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_lf','CMS_eff_b_lf_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_hf','CMS_eff_b_hf_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_hfstats1','CMS_eff_b_hfstats1_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_hfstats2','CMS_eff_b_hfstats2_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_lfstats1','CMS_eff_b_lfstats1_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_lfstats2','CMS_eff_b_lfstats2_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_cferr1','CMS_eff_b_cferr1_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_cferr2','CMS_eff_b_cferr2_'+year)
+
+  bbh_procs = ['bbH_htt','bbH_nobb_htt','bbH_hww','bbH_nobb_hww']
+  ggh_procs = ['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt','ggH_bb_hww','ggH_hww']
+  wh_procs = ['WH125','WH','WH1','WHWW125']
+  zh_procs = ['ZH125','ZH','ZH1','ZHWW125']
+  qqh_procs = ['VBF','qqH125','qqHWW125']
+  tth_procs = ['ttH125','ttH','TTH125','TTHWW125']
+
+  # bbH
+  cb.cp().process(bbh_procs).RenameSystematic(cb,'QCDscaleMURSig','QCDscaleMUR_bbH')
+  cb.cp().process(bbh_procs).RenameSystematic(cb,'QCDscaleMUFSig','QCDscaleMUF_bbH')
+  cb.cp().process(bbh_procs).RenameSystematic(cb,'PS_ISRSig','PS_ISR_bbH')
+  cb.cp().process(bbh_procs).RenameSystematic(cb,'PS_FSRSig','PS_FSR_bbH')
+
+  # ggH
+  cb.cp().process(ggh_procs).RenameSystematic(cb,'QCDscaleMURSig','QCDscaleMUR_ggH')
+  cb.cp().process(ggh_procs).RenameSystematic(cb,'QCDscaleMUFSig','QCDscaleMUF_ggH')
+  cb.cp().process(ggh_procs).RenameSystematic(cb,'PS_ISRSig','PS_ISR_ggH')
+  cb.cp().process(ggh_procs).RenameSystematic(cb,'PS_FSRSig','PS_FSR_ggH')
+
+  # qqH
+  cb.cp().process(qqh_procs).RenameSystematic(cb,'QCDscaleMURSig','QCDscaleMUR_qqH')
+  cb.cp().process(qqh_procs).RenameSystematic(cb,'QCDscaleMUFSig','QCDscaleMUF_qqH')
+  cb.cp().process(qqh_procs).RenameSystematic(cb,'PS_ISRSig','PS_ISR_qqH')
+  cb.cp().process(qqh_procs).RenameSystematic(cb,'PS_FSRSig','PS_FSR_qqH')
+
+  # ZH
+  cb.cp().process(zh_procs).RenameSystematic(cb,'QCDscaleMURSig','QCDscaleMUR_ZH')
+  cb.cp().process(zh_procs).RenameSystematic(cb,'QCDscaleMUFSig','QCDscaleMUF_ZH')
+  cb.cp().process(zh_procs).RenameSystematic(cb,'PS_ISRSig','PS_ISR_ZH')
+  cb.cp().process(zh_procs).RenameSystematic(cb,'PS_FSRSig','PS_FSR_ZH')
+
+  # WH
+  cb.cp().process(wh_procs).RenameSystematic(cb,'QCDscaleMURSig','QCDscaleMUR_WH')
+  cb.cp().process(wh_procs).RenameSystematic(cb,'QCDscaleMUFSig','QCDscaleMUF_WH')
+  cb.cp().process(wh_procs).RenameSystematic(cb,'PS_ISRSig','PS_ISR_WH')
+  cb.cp().process(wh_procs).RenameSystematic(cb,'PS_FSRSig','PS_FSR_WH')
+
+  # ttH
+  cb.cp().process(tth_procs).RenameSystematic(cb,'QCDscaleMURSig','QCDscaleMUR_ttH')
+  cb.cp().process(tth_procs).RenameSystematic(cb,'QCDscaleMUFSig','QCDscaleMUF_ttH')
+  cb.cp().process(tth_procs).RenameSystematic(cb,'PS_ISRSig','PS_ISR_ttH')
+  cb.cp().process(tth_procs).RenameSystematic(cb,'PS_FSRSig','PS_FSR_ttH')
+
+  # consistency with CMS naming convention
+  cb.cp().RenameSystematic(cb,'QCDscaleMURDY','QCDscaleMUR_zj')
+  cb.cp().RenameSystematic(cb,'QCDscaleMUFDY','QCDscaleMUF_zj')
+  cb.cp().RenameSystematic(cb,'PS_ISRDY','PS_ISR_zj')
+  cb.cp().RenameSystematic(cb,'PS_FSRDY','PS_FSR_zj')
+
+  cb.cp().RenameSystematic(cb,'QCDscaleMURTT','QCDscaleMUR_tj')
+  cb.cp().RenameSystematic(cb,'QCDscaleMUFTT','QCDscaleMUF_tj')
+  cb.cp().RenameSystematic(cb,'PS_ISRTT','PS_ISR_tj')
+  cb.cp().RenameSystematic(cb,'PS_FSRTT','PS_FSR_tj')
+
+  # prefiring
+  cb.cp().RenameSystematic(cb,'prefiring','CMS_prefiring')
