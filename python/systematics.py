@@ -1,17 +1,26 @@
 import CombineHarvester.CombineTools.ch as ch
 
+
+bbhsignals = ['bbH_htt','bbH_hww','intH_htt','intH_hww']
+hwwprocs_sig = ['bbH_hww','ggH_bb_hww','intH_hww']
+httprocs_sig = ['bbH_htt','ggH_bb_htt','intH_htt']
+
+h125ttprocs = ['ggH_htt','qqH_htt','WH_htt','ZH_htt','ttH_htt']
+h125wwprocs = ['ggH_hww','qqH_hww','ttH_hww','ZH_hww','WH_hww']
+  
+httprocs = httprocs_sig + h125ttprocs 
+hwwprocs = h125wwprocs + hwwprocs_sig 
+
+nojetfakes = httprocs + hwwprocs + ['EMB','DYJets','ZTT','ZL','ST','TT','TTL','TTT','VVL','VV','W','TTVJets']
+  
+
+mc_processes = httprocs + hwwprocs + ['DYJets','ZTT','ZL','ZJ','ST','TT','TTL','TTT','TTJ','VVL','VV','W','TTVJets']
+
+
 def AddCommonSystematics(cb, year):
   backgrounds = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  bbhsignals = ['bbH_htt','bbH_nobb_htt','bbH_hww','bbH_nobb_hww']
-  mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','ZL','TTL','VVL','qqH125','WH125','ZH125','TTH125','qqHWW125','WH','TTHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTVJets','ttH125','ttH']
-  nojetfakes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','ZL','TTL','VVL','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','EMB','W','ZTT','TTVJets','ttH125','ttH']
-  httprocs = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','ZH','VBF','qqH125','WH125','ZH125','ttH125','TTH125','ttH']
-  hwwprocs = ['bbH_hww','bbH_nobb_hww','ggH_bb_hww','ggH_hww','qqHWW125','TTHWW125']
-  h125ttprocs = ['ggH_htt','ZH','VBF','qqH125','WH125','ZH125','ttH125','TTH125','ttH']
-  h125wwprocs = ['ggH_hww','qqHWW125','TTHWW125']
-  hwwprocs_sig = ['bbH_hww','ggH_bb_hww']
-  httprocs_sig = ['bbH_htt','ggH_bb_htt']
+
 
   #Signal theory uncertainties
   cb.cp().process(bbhsignals).AddSyst(cb,'QCDscale_bbH','lnN', ch.SystMap()((0.76,1.201)))
@@ -32,14 +41,14 @@ def AddCommonSystematics(cb, year):
   cb.cp().process(hwwprocs).AddSyst(cb,'BR_hww_PU_mq','lnN', ch.SystMap()(1.0099))
   cb.cp().process(hwwprocs).AddSyst(cb,'BR_hww_PU_alphas','lnN', ch.SystMap()(1.0066))
 
-  cb.cp().process(['ZH125','ZH','ZH1','ZHWW125']).AddSyst(cb,'QCDscale_ZH','lnN',ch.SystMap()(1.009))
-  cb.cp().process(['ZH125','ZH','ZH1','ZHWW125']).AddSyst(cb,'pdf_Higgs_ZH','lnN',ch.SystMap()(1.013))
-  cb.cp().process(['WH125','WH','WH1','WHWW125']).AddSyst(cb,'QCDscale_WH','lnN',ch.SystMap()(1.008))
-  cb.cp().process(['WH125','WH','WH1','WHWW125']).AddSyst(cb,'pdf_Higgs_WH','lnN',ch.SystMap()(1.018))
-  cb.cp().process(['ttH125','ttH','TTH125','TTHWW125']).AddSyst(cb,'QCDscale_ttH','lnN',ch.SystMap()(1.08))
-  cb.cp().process(['ttH125','ttH','TTH125','TTHWW125']).AddSyst(cb,'pdf_Higgs_ttH','lnN',ch.SystMap()(1.036))
-  cb.cp().process(['VBF','qqH125','qqHWW125']).AddSyst(cb,'QCDscale_qqH','lnN',ch.SystMap()(1.005))
-  cb.cp().process(['VBF','qqH125','qqHWW125']).AddSyst(cb,'pdf_Higgs_qqbar','lnN',ch.SystMap()(1.021))
+  cb.cp().process(['ZH_htt','ZH_hww']).AddSyst(cb,'QCDscale_ZH','lnN',ch.SystMap()(1.009))
+  cb.cp().process(['ZH_htt','ZH_hww']).AddSyst(cb,'pdf_Higgs_ZH','lnN',ch.SystMap()(1.013))
+  cb.cp().process(['WH_htt','WH_hww']).AddSyst(cb,'QCDscale_WH','lnN',ch.SystMap()(1.008))
+  cb.cp().process(['WH_htt','WH_hww']).AddSyst(cb,'pdf_Higgs_WH','lnN',ch.SystMap()(1.018))
+  cb.cp().process(['ttH_htt','ttH_hww']).AddSyst(cb,'QCDscale_ttH','lnN',ch.SystMap()(1.08))
+  cb.cp().process(['ttH_htt','ttH_hww']).AddSyst(cb,'pdf_Higgs_ttH','lnN',ch.SystMap()(1.036))
+  cb.cp().process(['qqH_htt','qqH_hww']).AddSyst(cb,'QCDscale_qqH','lnN',ch.SystMap()(1.005))
+  cb.cp().process(['qqH_htt','qqH_hww']).AddSyst(cb,'pdf_Higgs_qqbar','lnN',ch.SystMap()(1.021))
 
   #Tau trigger efficiency 
   tautriggerdmbins = ["0","1","10","11"]
@@ -50,7 +59,7 @@ def AddCommonSystematics(cb, year):
 
   #Tau ID
   cb.cp().process(nojetfakes).channel(['mt','et']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.03))
-  cb.cp().process(['bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ggH125','qqH125','WH125','ZH125','EMB','ZTT','TTT','VVT','TT','VV','ST']).channel(['tt']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.06))
+  cb.cp().process(httprocs+['EMB','DYJets','ZTT','ZL','ST','TT','TTL','VVL','VV','W','TTVJets']).channel(['tt']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.06))
   cb.cp().process(['TTL','VVL']).channel(['tt']).AddSyst(cb,'CMS_eff_t_wp_'+year,'lnN',ch.SystMap()(1.03))
 
   #Electron ID
@@ -70,7 +79,7 @@ def AddCommonSystematics(cb, year):
     
 
   #Bkg normalisations
-  cb.cp().channel(['et','mt','tt','em']).process(['VVT','VVJ','VVL','VV','ST']).AddSyst(cb,'CMS_htt_vvXsec','lnN',ch.SystMap()(1.05))
+  cb.cp().channel(['et','mt','tt','em']).process(['VVT','VVJ','VVL','VV']).AddSyst(cb,'CMS_htt_vvXsec','lnN',ch.SystMap()(1.05))
   cb.cp().channel(['et','mt','tt','em']).process(['TTL','TT','TTJ','TTT']).AddSyst(cb,'CMS_htt_tjXsec','lnN',ch.SystMap()(1.06))
   cb.cp().channel(['et','mt','tt','em']).process(['W','WJets']).AddSyst(cb,'CMS_htt_wjXsec','lnN',ch.SystMap()(1.04))
   cb.cp().channel(['et','mt','tt','em']).process(['ZTT','ZL','ZJ','DYJets']).AddSyst(cb,'CMS_htt_zjXsec','lnN',ch.SystMap()(1.02))
@@ -160,9 +169,7 @@ def AddCommonSystematics(cb, year):
 def AddSystematics2018(cb):
   backgrounds  = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTH125','ttH125','ttH','TTHWW125','TTVJets']
-  bkg_processes = ['TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTH125','ttH125','ttH','TTHWW125','TTVJets']
-  sig_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125']
+
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2018','lnN', ch.SystMap()(1.015))
   #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.02))
@@ -220,7 +227,6 @@ def AddSystematics2018(cb):
 def AddSystematics2017(cb):
   backgrounds  = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTH125','ttH125','ttH','TTHWW125','TTVJets']
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2017','lnN', ch.SystMap()(1.020))
   #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.009))
@@ -280,7 +286,6 @@ def AddSystematics2017(cb):
 def AddSystematics2016(cb):
   backgrounds  = cb.cp().backgrounds().process_set()
   signals = cb.cp().signals().process_set()
-  mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTH125','TTHWW125','TTVJets','ttH125','ttH']
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2016','lnN', ch.SystMap()(1.010))
   # cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.006))
@@ -334,7 +339,6 @@ def AddSystematics2016(cb):
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_frac', 'shape', ch.SystMap()(1.0))
 
 def ConvertToLnN(cb,year):
-  mc_processes = ['bbH_htt','bbH_nobb_htt','ggH_bb_htt','ggH_htt','bbH125_yb2','bbH125_yb2_nobb','bbH125_yt2','ZL','TTL','VVL','ggH125','qqH125','WH125','ZH125','ggHWW125','qqHWW125','WHWW125','ZHWW125','TT','ST','WJets','DYJets','VV','ZH','VBF','W','ZTT','TTH125','ttH125','ttH','TTHWW125','TTVJets']
 
   jetToLepFakes_processes = ['QCD','ZL','TT','ST','W','VV']
   jetToLepFakes_sys = ['CMS_htt_em_BJetToElecFakes_'+year,'CMS_htt_em_BJetToMuonFakes_'+year,'CMS_htt_em_JetToElecFakes_'+year,'CMS_htt_em_JetToMuonFakes_'+year]
@@ -369,22 +373,22 @@ def renameSys(cb,year):
   for taubin in tautriggerdmbins:
     cb.cp().RenameSystematic(cb,'CMS_eff_xtrigger_t_tt_dm'+taubin+'_'+year,'CMS_eff_trigger_tt_dm'+taubin+'_'+year)
 
-  cb.cp().RenameSystematic(cb,'btag'+year+'_jes','CMS_eff_b_jes_'+year)
-  cb.cp().RenameSystematic(cb,'btag'+year+'_lf','CMS_eff_b_lf_'+year)
-  cb.cp().RenameSystematic(cb,'btag'+year+'_hf','CMS_eff_b_hf_'+year)
-  cb.cp().RenameSystematic(cb,'btag'+year+'_hfstats1','CMS_eff_b_hfstats1_'+year)
-  cb.cp().RenameSystematic(cb,'btag'+year+'_hfstats2','CMS_eff_b_hfstats2_'+year)
-  cb.cp().RenameSystematic(cb,'btag'+year+'_lfstats1','CMS_eff_b_lfstats1_'+year)
-  cb.cp().RenameSystematic(cb,'btag'+year+'_lfstats2','CMS_eff_b_lfstats2_'+year)
-  cb.cp().RenameSystematic(cb,'btag'+year+'_cferr1','CMS_eff_b_cferr1_'+year)
-  cb.cp().RenameSystematic(cb,'btag'+year+'_cferr2','CMS_eff_b_cferr2_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_jes','CMS_btag_jes_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_lf','CMS_btag_lf_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_hf','CMS_btag_hf_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_hfstats1','CMS_btag_hfstats1_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_hfstats2','CMS_btag_hfstats2_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_lfstats1','CMS_btag_lfstats1_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_lfstats2','CMS_btag_lfstats2_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_cferr1','CMS_btag_cferr1_'+year)
+  cb.cp().RenameSystematic(cb,'btag'+year+'_cferr2','CMS_btag_cferr2_'+year)
 
   bbh_procs = ['bbH_htt','bbH_nobb_htt','bbH_hww','bbH_nobb_hww']
   ggh_procs = ['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt','ggH_bb_hww','ggH_hww']
-  wh_procs = ['WH125','WH','WH1','WHWW125']
-  zh_procs = ['ZH125','ZH','ZH1','ZHWW125']
-  qqh_procs = ['VBF','qqH125','qqHWW125']
-  tth_procs = ['ttH125','ttH','TTH125','TTHWW125']
+  wh_procs = ['WH125','WH','WH1','WHWW125','WH_htt','WH_hww']
+  zh_procs = ['ZH125','ZH','ZH1','ZHWW125','ZH_htt','ZH_hww']
+  qqh_procs = ['VBF','qqH125','qqHWW125','qqH_htt','qqH_hww']
+  tth_procs = ['ttH125','ttH','TTH125','TTHWW125','ttH_htt','ttH_hww']
 
   # bbH
   cb.cp().process(bbh_procs).RenameSystematic(cb,'QCDscaleMURSig','QCDscaleMUR_bbH')
@@ -435,3 +439,18 @@ def renameSys(cb,year):
 
   # prefiring
   cb.cp().RenameSystematic(cb,'prefiring','CMS_prefiring')
+
+  # datacard review
+  cb.cp().RenameSystematic(cb,'ttbarShape','CMS_htt_ttbarShape')
+  cb.cp().RenameSystematic(cb,'dyShape1b','CMS_bbhtt_dyShape1b')
+  cb.cp().RenameSystematic(cb,'dyShape2b','CMS_bbhtt_dyShape2b')
+  cb.cp().RenameSystematic(cb,'dyxsec1b','CMS_bbhtt_dyxsec1b')
+  cb.cp().RenameSystematic(cb,'dyxsec2b','CMS_bbhtt_dyxsec2b')
+
+  cb.cp().RenameSystematic(cb,'fake_m_'+year,'CMS_fake_m_'+year)
+  cb.cp().RenameSystematic(cb,'fake_e_'+year,'CMS_fake_e_'+year)
+
+  ffsysts = ["qcd","w","tt","qcdfitpar0","qcdfitpar1","wfitpar0","wfitpar1","wfitpar2","ttfitpar0","ttfitpar1","frac"]
+  for ffsyst in ffsysts:
+    cb.cp().RenameSystematic(cb,'ff'+year+'_'+ffsyst,'CMS_bbhtt_'+year+'_'+ffsyst)
+

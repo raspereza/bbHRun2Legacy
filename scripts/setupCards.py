@@ -50,6 +50,10 @@ if year is not "2016" and not "2017" and not "2018":
   sys.exit()
 
 bkg_procs = {
+#  'mt' : ['QCD','TT','ST','DYJets','qqH_htt','ZH_htt','ttH_htt','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
+#  'et' : ['QCD','TT','ST','DYJets','qqH_htt','ZH_htt','ttH_htt','VV'],
+#  'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH_htt','WH_htt','ZH_htt','ttH_htt'],
+#  'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH_htt','WH_htt','ZH_htt','ttH_htt','qqH_hww','WH_hww','ZH_hww','TTH_hww']
   'mt' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
   'et' : ['QCD','TT','ST','DYJets','VBF','ZH','ttH','VV'],
   'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125'],
@@ -97,6 +101,22 @@ categories = {
   ]
 }
 
+replacement_dict = {
+    "HWW125": "H_hww",
+    "H125": "H_htt",
+    "ggF": "ggH_htt",
+    "TTH": "ttH"
+}
+
+exact_replacement = {
+  "ZH" : "ZH_htt",
+  "WH" : "WH_htt",
+  "ttH": "ttH_htt",
+  "VBF": "qqH_htt"
+
+}
+
+
 for chn in chns:
   cb.AddObservations( ['*'], ['bbhtt'], ['13TeV'], [chn], categories[chn])
   cb.AddProcesses( ['*'], ['bbhtt'], ['13TeV'], [chn], bkg_procs[chn], categories[chn], False)
@@ -130,6 +150,21 @@ for chn in chns:
   if chn in ["tt", "em"]:
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
+
+
+
+for expr, replacement in replacement_dict.items():
+  cb.cp().ForEachObj(lambda x: x.set_process(x.process().replace(expr, replacement)) if expr in x.process() else None) 
+
+
+#semi leptonic channels
+
+
+for expr, replacement in exact_replacement.items():
+  cb.cp().ForEachObj(lambda x: x.set_process(replacement) if x.process()==expr else None) 
+
+
+
 
 systs.ConvertToLnN(cb,year)
 
