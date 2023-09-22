@@ -104,7 +104,6 @@ categories = {
 replacement_dict = {
     "HWW125": "H_hww",
     "H125": "H_htt",
-    "ggF": "ggH_htt",
     "TTH": "ttH"
 }
 
@@ -152,6 +151,8 @@ for chn in chns:
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
 
 
+#cb.bin(['mt_2_13TeV_2018','et_2_13TeV_2018','mt_3_13TeV_2018','et_3_13TeV_2018','mt_2_13TeV_2018','et_2_13TeV_2018','mt_3_13TeV_2018','et_3_13TeV_2018']).signals().process(['intH'], False)
+
 
 for expr, replacement in replacement_dict.items():
   cb.cp().ForEachObj(lambda x: x.set_process(x.process().replace(expr, replacement)) if expr in x.process() else None) 
@@ -165,19 +166,38 @@ for expr, replacement in exact_replacement.items():
 
 
 
-
 systs.ConvertToLnN(cb,year)
 
 systs.renameSys(cb,year)
 
 ch.SetStandardBinNames(cb)
 
+
+def matching_proc(p,s):
+  return ((p.bin()==s.bin()) and (p.process()==s.process()) and (p.signal()==s.signal()) 
+         and (p.analysis()==s.analysis()) and  (p.era()==s.era()) 
+         and (p.channel()==s.channel()) and (p.bin_id()==s.bin_id()) and (p.mass()==s.mass()))
+
+
+def drop_bkg_interference(chob,proc):
+  drop_mt_et =  proc.process()=='intH_htt' and (proc.channel()=='mt' or proc.channel()=='et') and (proc.bin_id()==2 or proc.bin_id()==3)
+  drop_em =  (proc.process()=='intH_htt' or proc.process()=='intH_hww') and proc.channel()=='em' and (proc.bin_id()==2 or proc.bin_id()==1)
+  drop_process = drop_mt_et or drop_em
+  if(drop_process):
+    chob.FilterSysts(lambda sys: matching_proc(proc,sys)) 
+  return drop_process
+
+
+cb.FilterProcs(lambda x: drop_bkg_interference(cb,x))
+
+
 #remove old datacards
-outdir = "output/" + args.output_folder + "/" + chn + year
-if os.path.isdir(outdir):
+for chn in chns:
+  outdir = "output/" + args.output_folder + "/" + chn + year
+  if os.path.isdir(outdir):
     for f in os.listdir(outdir):
-        print "remove:",os.path.join(outdir,f)
-        os.remove(os.path.join(outdir, f))
+      print "remove:",os.path.join(outdir,f)
+      os.remove(os.path.join(outdir, f))
 
 writer=ch.CardWriter("output/" + args.output_folder + "/$TAG/$BIN"+year+".txt",
                       "output/" + args.output_folder +"/$TAG/bbhtt_input_$BIN"+year+".root")
