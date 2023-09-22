@@ -81,6 +81,7 @@ def AddCommonSystematics(cb, year):
 
   #Bkg normalisations
   cb.cp().channel(['et','mt','tt','em']).process(['VVT','VVJ','VVL','VV']).AddSyst(cb,'CMS_htt_vvXsec','lnN',ch.SystMap()(1.05))
+  cb.cp().channel(['et','mt','tt','em']).process(['ST']).AddSyst(cb,'CMS_htt_stXsec','lnN',ch.SystMap()(1.05))
   cb.cp().channel(['et','mt','tt','em']).process(['TTL','TT','TTJ','TTT']).AddSyst(cb,'CMS_htt_tjXsec','lnN',ch.SystMap()(1.06))
   cb.cp().channel(['et','mt','tt','em']).process(['W','WJets']).AddSyst(cb,'CMS_htt_wjXsec','lnN',ch.SystMap()(1.04))
   cb.cp().channel(['et','mt','tt','em']).process(['ZTT','ZL','ZJ','DYJets']).AddSyst(cb,'CMS_htt_zjXsec','lnN',ch.SystMap()(1.02))
