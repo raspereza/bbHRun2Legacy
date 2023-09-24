@@ -2,8 +2,8 @@ import CombineHarvester.CombineTools.ch as ch
 
 
 bbhsignals = ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww']
-hwwprocs_sig = ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt']
-httprocs_sig = ['bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww']
+httprocs_sig = ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt']
+hwwprocs_sig = ['bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww']
 
 h125ttprocs = ['ggH_htt','qqH_htt','WH_htt','ZH_htt','ttH_htt','qqH125','WH125','ZH125','TTH125','ttH','TTH','ttH125','VBF']
 #h125wwprocs = ['ggH_hww','qqH_hww','ttH_hww','ZH_hww','WH_hww','qqHWW125','TTHWW125','WHWW125','ZHWW125']
@@ -182,7 +182,7 @@ def AddSystematics2018(cb):
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Current_Calibration','lnN', ch.SystMap()(1.002))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Length_Scale','lnN', ch.SystMap()(1.002))
 
-
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'pu_2018', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2018_jes', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2018_lf', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2018_hf', 'shape', ch.SystMap()(1.0))
@@ -240,7 +240,7 @@ def AddSystematics2017(cb):
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Length_Scale','lnN', ch.SystMap()(1.003))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Ghosts_And_Satellites','lnN', ch.SystMap()(1.001))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Dynamic_Beta','lnN', ch.SystMap()(1.005))
-
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'pu_2017', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2017_jes', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2017_lf', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2017_hf', 'shape', ch.SystMap()(1.0))
@@ -270,8 +270,8 @@ def AddSystematics2017(cb):
   cb.cp().process(mc_processes).channel(["et"]).AddSyst(cb, 'eff_trig_et_2017', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_m_2017', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_e_2017', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
-  #cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'prefiring2017', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_qcd', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_w', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2017_tt', 'shape', ch.SystMap()(1.0))
@@ -296,16 +296,34 @@ def AddSystematics2016(cb):
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.009))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Ghosts_And_Satellites','lnN', ch.SystMap()(1.004))
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Dynamic_Beta','lnN', ch.SystMap()(1.005))
-
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_jes', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_lf', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_hf', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_hfstats1', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_hfstats2', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_lfstats1', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_lfstats2', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_cferr1', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2016_cferr2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'pu_2016', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_cferr2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_preVFP_cferr2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_jes', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_lf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_hf', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_hfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_hfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_lfstats1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_lfstats2', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_cferr1', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'btag2016_postVFP_cferr2', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'jesAbsolute', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'jesAbsolute_2016', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'jesBBEC1', 'shape', ch.SystMap()(1.0))
@@ -326,8 +344,8 @@ def AddSystematics2016(cb):
   cb.cp().process(mc_processes).channel(["et"]).AddSyst(cb, 'eff_trig_et_2016', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_m_2016', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'fake_e_2016', 'shape', ch.SystMap()(1.0))
-  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
-  #cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'prefiring', 'shape', ch.SystMap()(1.0))
+  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'prefiring2016', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_qcd', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_w', 'shape', ch.SystMap()(1.0))
   cb.cp().process(['QCD']).channel(["mt","et"]).AddSyst(cb, 'ff2016_tt', 'shape', ch.SystMap()(1.0))
@@ -384,6 +402,24 @@ def renameSys(cb,year):
   cb.cp().RenameSystematic(cb,'btag'+year+'_lfstats2','CMS_btag_lfstats2_'+year)
   cb.cp().RenameSystematic(cb,'btag'+year+'_cferr1','CMS_btag_cferr1_'+year)
   cb.cp().RenameSystematic(cb,'btag'+year+'_cferr2','CMS_btag_cferr2_'+year)
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_jes','CMS_btag_jes_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_lf','CMS_btag_lf_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_hf','CMS_btag_hf_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_hfstats1','CMS_btag_hfstats1_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_hfstats2','CMS_btag_hfstats2_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_lfstats1','CMS_btag_lfstats1_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_lfstats2','CMS_btag_lfstats2_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_cferr1','CMS_btag_cferr1_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_preVFP_cferr2','CMS_btag_cferr2_2016_preVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_jes','CMS_btag_jes_2016_postVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_lf','CMS_btag_lf_2016_postVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_hf','CMS_btag_hf_2016_postVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_hfstats1','CMS_btag_hfstats1_2016_postVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_hfstats2','CMS_btag_hfstats2_2016_postVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_lfstats1','CMS_btag_lfstats1_2016_postVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_lfstats2','CMS_btag_lfstats2_2016_postVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_cferr1','CMS_btag_cferr1_2016_postVFP')
+  cb.cp().RenameSystematic(cb,'btag2016_postVFP_cferr2','CMS_btag_cferr2_2016_postVFP')
 
   bbh_procs = ['bbH_htt','bbH_nobb_htt','bbH_hww','bbH_nobb_hww']
   ggh_procs = ['ggH125','ggHWW125','bbH125_yb2','bbH125_yt2','ggH_bb_htt','ggH_htt','ggH_bb_hww','ggH_hww']
@@ -442,6 +478,9 @@ def renameSys(cb,year):
 
   # prefiring
   cb.cp().RenameSystematic(cb,'prefiring','CMS_prefiring')
+  cb.cp().RenameSystematic(cb,'prefiring2017','CMS_prefiring2017')
+  cb.cp().RenameSystematic(cb,'prefiring2016','CMS_prefiring2016')
+
 
   # datacard review
   cb.cp().RenameSystematic(cb,'ttbarShape','CMS_htt_ttbarShape')
