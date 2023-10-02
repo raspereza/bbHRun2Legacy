@@ -174,13 +174,13 @@ def AddSystematics2018(cb):
 
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2018','lnN', ch.SystMap()(1.015))
-  #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.02))
-  #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_1718','lnN', ch.SystMap()(1.002))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Correlated','lnN', ch.SystMap()(1.02))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Correlated1718','lnN', ch.SystMap()(1.002))
   # correlated with the HIG-19-010 datacards
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.002))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.02))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Current_Calibration','lnN', ch.SystMap()(1.002))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Length_Scale','lnN', ch.SystMap()(1.002))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.002))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.02))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Current_Calibration','lnN', ch.SystMap()(1.002))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Length_Scale','lnN', ch.SystMap()(1.002))
 
 #  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'pu_2018', 'shape', ch.SystMap()(1.0))
 #  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2018_jes', 'shape', ch.SystMap()(1.0))
@@ -231,15 +231,16 @@ def AddSystematics2017(cb):
   signals = cb.cp().signals().process_set()
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2017','lnN', ch.SystMap()(1.020))
-  #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.009))
-  #  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_1718','lnN', ch.SystMap()(1.006))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Correlated','lnN', ch.SystMap()(1.009))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Correlated1718','lnN', ch.SystMap()(1.006))
   #  correlated with the HIG-19-010 datacards
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.004))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.008))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Current_Calibration','lnN', ch.SystMap()(1.003))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Length_Scale','lnN', ch.SystMap()(1.003))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Ghosts_And_Satellites','lnN', ch.SystMap()(1.001))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Dynamic_Beta','lnN', ch.SystMap()(1.005))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.004))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.008))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Current_Calibration','lnN', ch.SystMap()(1.003))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Length_Scale','lnN', ch.SystMap()(1.003))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Ghosts_And_Satellites','lnN', ch.SystMap()(1.001))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Dynamic_Beta','lnN', ch.SystMap()(1.005))
+
 #  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'pu_2017', 'shape', ch.SystMap()(1.0))
 #  cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2017_jes', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["mt","et","tt","em"]).AddSyst(cb, 'btag2017_lf', 'shape', ch.SystMap()(1.0))
@@ -290,12 +291,13 @@ def AddSystematics2016(cb):
   signals = cb.cp().signals().process_set()
 
   cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Uncorrelated_2016','lnN', ch.SystMap()(1.010))
-  # cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.006))
+  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Correlated','lnN', ch.SystMap()(1.006))
   #  correlated with the HIG-19-010 datacards
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.004))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.009))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Ghosts_And_Satellites','lnN', ch.SystMap()(1.004))
-  cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Dynamic_Beta','lnN', ch.SystMap()(1.005))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Beam_Beam_Deflection','lnN', ch.SystMap()(1.004))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_X_Y_Factorization','lnN', ch.SystMap()(1.009))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Ghosts_And_Satellites','lnN', ch.SystMap()(1.004))
+  #cb.cp().process(mc_processes).AddSyst(cb,'lumi_13TeV_Dynamic_Beta','lnN', ch.SystMap()(1.005))
+
 #  cb.cp().process(mc_processes).channel(["mt","et"]).AddSyst(cb, 'pu_2016', 'shape', ch.SystMap()(1.0))
 #  cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_jes', 'shape', ch.SystMap()(1.0))
   cb.cp().process(mc_processes).channel(["tt","em"]).AddSyst(cb, 'btag2016_lf', 'shape', ch.SystMap()(1.0))
