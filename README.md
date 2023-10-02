@@ -11,7 +11,7 @@ git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsA
 cd HiggsAnalysis/CombinedLimit
 git checkout v8.2.0
 cd ../..
-git clone https://github.com/cms-analysis/CombineHarvester.git CombineHarvester
+git clone https://github.com/cms-analysis/CombineHarvester.git CombineHarvester -b 102x
 cd CombineHarvester
 git clone https://github.com/raspereza/bbHRun2Legacy.git bbHRun2Legacy
 cd bbHRun2Legacy
