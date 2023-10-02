@@ -127,13 +127,13 @@ cb.AddDatacardLineAtEnd("* autoMCStats 0")
 for chn in chns:
   inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
   if chn in ["et","mt"]:
-    inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC')
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC')
+  #    inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
+  #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
+  #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
+  #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC') 
+  #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC')
+  #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC') 
+  #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC')
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
   if chn in ["tt", "em"]:
