@@ -50,17 +50,17 @@ if year is not "2016" and not "2017" and not "2018":
   sys.exit()
 
 bkg_procs = {
-  'mt' : ['QCD','TT','ST','DYJets','VBF','ZH','WH','ttH','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
-  'et' : ['QCD','TT','ST','DYJets','VBF','ZH','WH','ttH','VV'],
-  'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes','qqH125','WH125','ZH125','TTH125'],
-  'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125']
+  'mt' : ['QCD','TT','ST','DYJets','VV'], #bbH_nobb_htt,ggH_htt, intH_htt labeled as signal for kappa model, for asymptotic limit they are not scaled with r
+  'et' : ['QCD','TT','ST','DYJets','VV'],
+  'tt' : ['ZTT','ZL','TT','VV','ST','jetFakes', 'wFakes'],
+  'em' : ['ZTT','ZL','TT','VV','ST','QCD','W','TTVJets']
 }
 
 sig_procs = {
-   'mt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],#bbH_nobb_htt removed because of negative contribution
-   'et' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],#bbH_nobb_htt removed because of negative contribution
-   'tt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt'],
-   'em' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww']
+   'mt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','VBF','ZH','WH','ttH'],#bbH_nobb_htt removed because of negative contribution
+   'et' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','VBF','ZH','WH','ttH'],#bbH_nobb_htt removed because of negative contribution
+   'tt' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','qqH125','WH125','ZH125','TTH125'],
+   'em' : ['bbH_htt','ggH_bb_htt','intH_bb_htt','ggH_htt','intH_htt','bbH_hww','ggH_bb_hww','intH_bb_hww','ggH_hww','intH_hww','qqH125','WH125','ZH125','TTH125','qqHWW125','WHWW125','ZHWW125','TTHWW125']
 }
 
 
@@ -127,22 +127,12 @@ cb.AddDatacardLineAtEnd("* autoMCStats 0")
 for chn in chns:
   inputfile = shapes + '/htt_'+chn+'_bbH.Run'+year+'.root' 
   if chn in ["et","mt"]:
-    inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS', 'BDToutput/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDTCR/$PROCESS', 'BDTCR/$PROCESS_$SYSTEMATIC')
-    #cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC') 
-    #cb.cp().channel([chn]).signals().ExtractShapes(inputfile, 'BDToutput/$PROCESS_$BIN', 'BDToutput/$PROCESS_$BIN_$SYSTEMATIC')
+    #inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
   if chn in ["tt", "em"]:
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
-
-
-#cb.bin(['mt_2_13TeV_2018','et_2_13TeV_2018','mt_3_13TeV_2018','et_3_13TeV_2018','mt_2_13TeV_2018','et_2_13TeV_2018','mt_3_13TeV_2018','et_3_13TeV_2018']).signals().process(['intH'], False)
-
 
 for expr, replacement in replacement_dict.items():
   cb.cp().ForEachObj(lambda x: x.set_process(x.process().replace(expr, replacement)) if expr in x.process() else None) 
