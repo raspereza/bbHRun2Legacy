@@ -9,6 +9,12 @@ import os
 import sys
 import argparse
 
+def drop_em_tt_qcd(chob,proc):
+  drop_process =  proc.process()=='QCD' and proc.channel()=='em' and proc.bin_id()==1
+  if(drop_process):
+    chob.FilterSysts(lambda sys: matching_proc(proc,sys)) 
+  return drop_process
+
 parser = argparse.ArgumentParser()
 parser.add_argument(
  '--channel', default='tt', help="""Which channels to run? Supported options: 'all', 'mt', 'et', 'tt', 'em'""")
@@ -130,9 +136,10 @@ for chn in chns:
     #inputfile = shapes + '/htt_'+chn+'_bbH_comb.Run'+year+'.root' 
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
-  if chn in ["tt", "em"]:
+  if chn in ["tt","em"]:
     cb.cp().channel([chn]).backgrounds().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
     cb.cp().channel([chn]).signals().ExtractShapes(inputfile, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC') 
+
 
 for expr, replacement in replacement_dict.items():
   cb.cp().ForEachObj(lambda x: x.set_process(x.process().replace(expr, replacement)) if expr in x.process() else None) 
@@ -169,7 +176,7 @@ def drop_bkg_interference(chob,proc):
 
 
 cb.FilterProcs(lambda x: drop_bkg_interference(cb,x))
-
+cb.FilterProcs(lambda x: drop_em_tt_qcd(cb,x))
 
 #remove old datacards
 for chn in chns:
