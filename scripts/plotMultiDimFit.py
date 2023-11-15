@@ -46,7 +46,7 @@ else:
 name = args.files[0].split("/")[-2]
 limit = plot.MakeTChain(args.files, 'limit')
 graph = plot.TGraph2DFromTree(
-    limit, "kappa_t", "kappa_b", '2*deltaNLL', 'quantileExpected > -0.5 && deltaNLL > 0 && deltaNLL < 1000')
+    limit, "kappa_t", "kappa_b", '2*deltaNLL', 'quantileExpected > -0.5 && deltaNLL > 0 && deltaNLL < 1000 && abs(kappa_t)<2.35')
 best = plot.TGraphFromTree(
     limit, "kappa_t", "kappa_b", 'deltaNLL == 0')
 plot.RemoveGraphXDuplicates(best)
@@ -87,9 +87,9 @@ if debug is not None:
         debug.WriteTObject(cont, 'cont_2sigma_%i' % i)
 
 if args.sm_exp or args.bg_exp:
-    legend = plot.PositionedLegend(0.5, 0.25, 3, 0.015)
+    legend = plot.PositionedLegend(0.3, 0.25, 3, 0.015)
 else:
-    legend = plot.PositionedLegend(0.3, 0.2, 3, 0.015)
+    legend = plot.PositionedLegend(0.15, 0.2, 3, 0.015)
 
 pads[0].cd()
 axis.Draw()
@@ -101,7 +101,7 @@ for i, p in enumerate(cont_2sigma):
     p.SetFillStyle(1001)
     p.Draw("F SAME")
     p.Draw("L SAME")
-    legend.AddEntry(cont_1sigma[0], "68% CL", "F")
+legend.AddEntry(cont_2sigma[0], "95% CL", "F")
 
 for i, p in enumerate(cont_1sigma):
     p.SetLineStyle(1)
@@ -111,7 +111,7 @@ for i, p in enumerate(cont_1sigma):
     p.SetFillStyle(1001)
     p.Draw("F SAME")
     p.Draw("L SAME")
-    legend.AddEntry(cont_2sigma[0], "95% CL", "F")
+legend.AddEntry(cont_1sigma[0], "68% CL", "F")
 
 best.SetMarkerStyle(34)
 best.SetMarkerSize(3)
