@@ -140,7 +140,7 @@ else:
 
 
 categories = {
-  'tt': {'1': 'Htt signal class',
+  'tt': {'1': 'inclusive',#Htt signal class
          '2': 'Fake class',
          '3': 'DY class',
          '4': 'TT class'},
@@ -150,7 +150,7 @@ categories = {
   'et': {'1': 'Htt signal class',
          '2': 'TT class',
          '3': 'DY class'},
-  'em': {'1': 'TT class',
+  'em': {'1': 'inclusive',#TT class
          '2': 'DY class',
          '3': 'Htt signal class',
          '4': 'HWW signal class'}}
@@ -158,13 +158,19 @@ categories = {
 mode_sig = 'prefit'
 file_dir = 'bbhtt_'+channel+'_'+category+'_13TeV'+year+'_'+mode
 file_dir_sig = 'bbhtt_'+channel+'_'+category+'_13TeV'+year+'_'+mode_sig
-
+file_dir_tot_bkg = file_dir
+file_dir_tot_sig = file_dir_sig
 if year=="2018":
   lumi = "2018 59.7 fb^{-1} (13 TeV)"
 elif year=="2017":
   lumi = "2017 41.5 fb^{-1} (13 TeV)"
 elif year=="2016":
   lumi = "2016 36.3 fb^{-1} (13 TeV)"
+elif year== "Run2":
+  lumi = "Run 2 138 fb^{-1} (13 TeV)"
+  file_dir_tot_bkg = mode
+  file_dir_tot_sig = 'prefit'
+  
 
 if channel == "tt":
   channel_label = "#tau_{h}#tau_{h}, "+categories[channel][category]
@@ -230,13 +236,15 @@ signal_schemes = {'mt' :[signalComp("bbH+ggH",['bbH_htt','ggH_bb_htt','intH_bb_h
 'tt' :[signalComp("bbH#tau#tau",['bbH_htt','ggH_bb_htt','intH_bb_htt'],4,1,50)],
 'em' :[signalComp("bbH#tau#tau",['bbH_htt','ggH_bb_htt','intH_bb_htt'],4,1,50),signalComp("bbHWW",['bbH_hww','ggH_bb_hww','intH_bb_hww'],7,1,50)]}
 
+
+"""#Uncomment to run on non-inclusive categories
 if channel=="em" and category=="1": #no QCD process for tt class of em channel
   background_schemes = {'em':[backgroundComp("H(125)",["ggH_htt", "qqH_htt", "ZH_htt", "WH_htt", "ttH_htt", "ggH_hww", "qqH_hww", "WH_hww", "ZH_hww", "ttH_hww"], ROOT.TColor.GetColor(250, 202, 255)),
         backgroundComp("electroweak",["ST","VV","W","TTVJets"],TColor.GetColor(222,90,106)),
 	backgroundComp("t#bar{t}",["TT"], TColor.GetColor(155, 152, 204)),
 	backgroundComp("Drell-Yan",["ZTT","ZL"], TColor.GetColor(248, 206, 104))]}
 
-
+"""
 #Extract relevent histograms from shape file
 sig_histos = []
 for i,t in enumerate(signal_schemes[channel]):
@@ -270,15 +278,15 @@ for i,t in enumerate(signal_schemes[channel]):
   h.Scale(t['norm'])
   sig_histos.append(h)
 
-sighist = getHistogram(histo_file,'TotalSig', file_dir_sig, mode_sig, args.no_signal, log_x)[0]
+sighist = getHistogram(histo_file,'TotalSig', file_dir_tot_sig, mode_sig, args.no_signal, log_x)[0]
 if sb_vs_b_ratio:
-    sbhist = getHistogram(histo_file,'TotalProcs',file_dir, mode, args.no_signal, log_x)[0]
-    bkg_sb_vs_b_ratio_hist = getHistogram(histo_file,'TotalBkg',file_dir, mode, logx=log_x)[0]
+    sbhist = getHistogram(histo_file,'TotalProcs',file_dir_tot_bkg, mode, args.no_signal, log_x)[0]
+    bkg_sb_vs_b_ratio_hist = getHistogram(histo_file,'TotalBkg',file_dir_tot_bkg, mode, logx=log_x)[0]
 for i in range(0,sighist.GetNbinsX()):
   if sighist.GetBinContent(i) < y_axis_min: sighist.SetBinContent(i,y_axis_min)
-bkghist = getHistogram(histo_file,'TotalBkg',file_dir, mode, logx=log_x)[0]
+bkghist = getHistogram(histo_file,'TotalBkg',file_dir_tot_bkg, mode, logx=log_x)[0]
 
-total_datahist = getHistogram(histo_file,"data_obs",file_dir, mode, logx=log_x)[0]
+total_datahist = getHistogram(histo_file,"data_obs",file_dir_tot_bkg, mode, logx=log_x)[0]
 binerror_datahist = total_datahist.Clone()
 blind_datahist = total_datahist.Clone()
 total_datahist.SetMarkerStyle(20)

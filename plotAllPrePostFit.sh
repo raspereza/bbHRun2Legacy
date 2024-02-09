@@ -1,6 +1,6 @@
 for CH in tt mt et em
 do
-    for YEAR in 2018 2017 2016
+    for YEAR in 2018 2017 2016 Run2
     do
 	for CAT in 1 2 3 4
 	do 
